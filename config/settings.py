@@ -26,11 +26,14 @@ SECRET_KEY = 'dh&f47(&umbdvb-&$hsuvbt0d7jl3@x3fh=%x7flbth$&b8i31'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-     "127.0.0.1",
+    "127.0.0.1",
     "localhost",
     "192.168.100.134",
-     '172.17.242.116',
+    "172.17.242.116",
 ]
+
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(os.environ["RENDER_EXTERNAL_HOSTNAME"])
 
 
 # Application definition
