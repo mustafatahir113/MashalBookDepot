@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>Login - Mashal Book Depot</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            overflow-x: hidden;
+        }
+
+        .card {
+
+            width: 100%;
+            max-width: 525px;
+
+            background:
+                rgba(255, 255, 255, .15);
+
+            backdrop-filter: blur(20px);
+
+            padding: 45px 50px;
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, .25);
+
+            animation:
+                fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 50px;
+
+            margin-bottom: 10px;
+
+            animation:
+                logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+
+            color: white;
+
+            text-align: center;
+
+            font-size: 40px;
+
+            margin-bottom: 10px;
+
+            font-weight: 800;
+        }
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #eeeeee;
+
+            font-size: 21px;
+
+            margin-bottom: 30px;
+        }
+
+        .error-message {
+
+            background: #ffdddd;
+
+            color: #c00000;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            font-weight: 700;
+
+            animation:
+                errorShow .4s ease;
+        }
+
+        @keyframes errorShow {
+
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+
+            margin-top: 18px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 15px 16px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: white;
+
+            color: #222;
+
+            font-size: 16px;
+
+            transition: .3s;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, .08);
+        }
+
+        .form-group input:focus {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 22px rgba(0, 0, 0, .18);
+        }
+
+        .login-btn {
+
+            width: 100%;
+
+            margin-top: 28px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: #00d084;
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .login-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, .2);
+
+            background: #00bd78;
+        }
+
+        .links {
+
+            text-align: center;
+
+            margin-top: 22px;
+        }
+
+        .links a {
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: .3s;
+        }
+
+        .links a:hover {
+
+            text-decoration: underline;
+
+            opacity: .85;
+        }
+
+        .forgot-links {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            margin-top: 18px;
+        }
+
+        .forgot-links a {
+
+            color: #eeeeee;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+        .forgot-links a:hover {
+
+            text-decoration: underline;
+
+            color: white;
+        }
+
+        .register-text {
+
+            color: #111111;
+
+            font-size: 17px;
+
+            margin-top: 30px;
+        }
+
+        .register-text a {
+
+            color: white;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+        .register-text a:hover {
+
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 20px 12px;
+            }
+
+            .card {
+
+                padding: 35px 25px;
+
+                border-radius: 22px;
+            }
+
+            h1 {
+
+                font-size: 31px;
+            }
+
+            .subtitle {
+
+                font-size: 18px;
+            }
+
+            .logo {
+
+                font-size: 42px;
+            }
+
+            .forgot-links {
+
+                flex-direction: column;
+
+                gap: 10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        📚
+    </div>
+
+    <h1>
+        Mashal Book Depot
+    </h1>
+
+    <p class="subtitle">
+        Welcome Back
+    </p>
+
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="error-message">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    {% if form.non_field_errors %}
+
+        <div class="error-message">
+
+            {% for error in form.non_field_errors %}
+
+                {{ error }}
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+    {% load socialaccount %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <!-- USERNAME OR EMAIL -->
+
+        <div class="form-group">
+
+            <label for="id_identifier">
+                Username or Email
+            </label>
+
+            <input
+                type="text"
+                name="identifier"
+                id="id_identifier"
+                placeholder="Enter your username or email"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="id_password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                id="id_password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="login-btn"
+        >
+            Login
+        </button>
+
+
+        <div class="forgot-links">
+
+            <a href="{% url 'password_reset' %}">
+                Forgot Password?
+            </a>
+
+        </div>
+
+    </form>
+    <div style="text-align: center; margin: 25px 0 15px;">
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #777;
+        font-size: 14px;
+    ">
+        <span style="flex: 1; height: 1px; background: #ddd;"></span>
+        <span>OR</span>
+        <span style="flex: 1; height: 1px; background: #ddd;"></span>
+    </div>
+</div>
+
+<a href="{% provider_login_url 'google' %}"
+   style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px 18px;
+        background: white;
+        color: #222;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0,0,0,.08);
+        transition: .3s;
+   ">
+
+    <span style="font-size: 20px;">G</span>
+
+    Continue with Google
+
+</a>
+
+
+
+    <div class="links register-text">
+
+        Don't have an account?
+
+        <a href="{% url 'register' %}">
+            Register
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

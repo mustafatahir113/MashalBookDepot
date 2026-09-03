@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Continue with Google - Mashal Book Depot</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(circle at top left, #8b9cf6 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #9b6ac7 0%, transparent 35%),
+                linear-gradient(135deg, #667eea, #764ba2);
+
+            overflow-x: hidden;
+        }
+
+        /* Background decoration */
+
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: .25;
+            pointer-events: none;
+        }
+
+        .circle-one {
+            width: 220px;
+            height: 220px;
+            background: white;
+            top: -80px;
+            left: -80px;
+        }
+
+        .circle-two {
+            width: 280px;
+            height: 280px;
+            background: white;
+            bottom: -120px;
+            right: -100px;
+        }
+
+        /* Main card */
+
+        .card {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+
+            padding: 42px 40px;
+
+            background: rgba(255, 255, 255, 0.94);
+
+            border: 1px solid rgba(255, 255, 255, 0.7);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.25);
+
+            text-align: center;
+
+            animation: cardShow .7s ease;
+        }
+
+        @keyframes cardShow {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Logo */
+
+        .logo {
+            width: 78px;
+            height: 78px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 22px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            font-size: 40px;
+
+            box-shadow:
+                0 12px 25px rgba(102, 126, 234, .35);
+
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Heading */
+
+        h1 {
+            color: #202124;
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+
+            font-size: 16px;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+        /* Google box */
+
+        .google-box {
+            padding: 22px;
+
+            background: #f8f9fa;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            margin-bottom: 22px;
+        }
+
+        .google-icon {
+            width: 52px;
+            height: 52px;
+
+            margin: 0 auto 14px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            color: #4285F4;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, .10);
+        }
+
+        .google-title {
+            color: #202124;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .google-text {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        /* Continue button */
+
+        .continue-btn {
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 15px 20px;
+
+            background: white;
+
+            color: #202124;
+
+            border: 1px solid #dadce0;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, .08);
+
+            transition: all .25s ease;
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, .14);
+
+            border-color: #c4c7c5;
+        }
+
+        .continue-btn:active {
+            transform: translateY(0);
+        }
+
+        .google-letter {
+            width: 24px;
+            height: 24px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            color: #4285F4;
+        }
+
+        /* Back link */
+
+        .back-link {
+            display: inline-block;
+
+            margin-top: 24px;
+
+            color: #667eea;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            transition: .25s;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Security text */
+
+        .security {
+            margin-top: 28px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #eeeeee;
+
+            color: #8a8a8a;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .security-icon {
+            margin-right: 4px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 32px 22px;
+
+                border-radius: 22px;
+            }
+
+            .logo {
+                width: 68px;
+                height: 68px;
+
+                font-size: 34px;
+
+                border-radius: 19px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            .google-box {
+                padding: 18px;
+            }
+
+            .continue-btn {
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            .card {
+                padding: 28px 17px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="circle circle-one"></div>
+    <div class="circle circle-two"></div>
+
+
+    <div class="card">
+
+        <!-- Book Depot Logo -->
+
+        <div class="logo">
+            📚
+        </div>
+
+
+        <!-- Heading -->
+
+        <h1>
+            Sign in with Google
+        </h1>
+
+
+        <p class="subtitle">
+            Welcome to Mashal Book Depot. Continue with your Google account to sign in securely.
+        </p>
+
+
+        <!-- Google Information -->
+
+        <div class="google-box">
+
+            <div class="google-icon">
+                G
+            </div>
+
+            <div class="google-title">
+                Continue with Google
+            </div>
+
+            <div class="google-text">
+                Use your Google account to access your Mashal Book Depot account quickly and securely.
+            </div>
+
+        </div>
+
+
+        <!-- Google Login -->
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="continue-btn"
+            >
+
+                <span class="google-letter">
+                    G
+                </span>
+
+                <span>
+                    Continue with Google
+                </span>
+
+            </button>
+
+        </form>
+
+
+        <!-- Back to Login -->
+
+        <a
+            href="{% url 'login' %}"
+            class="back-link"
+        >
+            ← Back to Login
+        </a>
+
+
+        <!-- Security Message -->
+
+        <div class="security">
+
+            <span class="security-icon">🔒</span>
+
+            Your account information is protected and securely handled.
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

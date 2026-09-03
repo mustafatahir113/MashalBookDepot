@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phone Login - Mashal Book Depot</title>
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .card {
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 25px;
+            background: rgba(255,255,255,.15);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,.25);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            color: #eee;
+        }
+
+        label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            margin: 25px 0 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #00d084;
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .error {
+            background: #ffdddd;
+            color: #b00000;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>📱 Phone Login</h1>
+
+    <p>Enter your registered phone number</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="phone">
+            Phone Number
+        </label>
+
+        <input
+            type="text"
+            name="phone"
+            id="phone"
+            placeholder="03XXXXXXXXX"
+            maxlength="15"
+            required
+        >
+
+        <button type="submit">
+            Continue
+        </button>
+    </form>
+
+    <a href="{% url 'login' %}" class="back">
+        ← Back to Login
+    </a>
+
+</div>
+
+</body>
+</html>

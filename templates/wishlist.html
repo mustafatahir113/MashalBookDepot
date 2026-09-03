@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Wishlist | Mashal Book Depot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        .wishlist-page {
+            min-height: 100vh;
+            padding: 50px 20px;
+        }
+
+        .wishlist-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        .wishlist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .wishlist-title-area h1 {
+            margin: 0 0 8px;
+            font-size: 36px;
+            font-weight: 800;
+            color: #101828;
+        }
+
+        .wishlist-title-area p {
+            margin: 0;
+            color: #667085;
+            font-size: 16px;
+        }
+
+        .heart-icon {
+            font-size: 36px;
+        }
+
+        /* WISHLIST GRID */
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(300px, 1fr)
+            );
+            gap: 22px;
+        }
+
+        /* ITEM */
+
+        .wishlist-item {
+            background: #ffffff;
+            border: 1px solid #eaecf0;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow:
+                0 8px 25px rgba(16, 24, 40, 0.06);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .wishlist-item:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 14px 35px rgba(16, 24, 40, 0.10);
+        }
+
+        /* PRODUCT IMAGE */
+
+        .product-image-box {
+            width: 100%;
+            height: 230px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f8f9fc;
+            border-radius: 14px;
+
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .product-image-box img {
+            max-width: 100%;
+            max-height: 100%;
+
+            width: auto;
+            height: auto;
+
+            object-fit: contain;
+
+            transition:
+                transform 0.25s ease;
+        }
+
+        .wishlist-item:hover
+        .product-image-box img {
+            transform: scale(1.04);
+        }
+
+        /* PRODUCT INFO */
+
+        .product-info h2 {
+            margin: 0 0 10px;
+
+            font-size: 20px;
+            line-height: 1.35;
+
+            color: #101828;
+        }
+
+        .product-price {
+            margin: 0 0 18px;
+
+            font-size: 20px;
+            font-weight: 800;
+
+            color: #4f46e5;
+        }
+
+        /* BUTTONS */
+
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .wishlist-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 44px;
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .wishlist-button:hover {
+            transform: translateY(-1px);
+        }
+
+        .view-button {
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        .view-button:hover {
+            background: #e0e7ff;
+        }
+
+        .cart-button {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .cart-button:hover {
+            background: #3730a3;
+        }
+
+        .remove-button {
+            grid-column: 1 / -1;
+
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .remove-button:hover {
+            background: #ffe4e6;
+        }
+
+        /* EMPTY WISHLIST */
+
+        .empty-wishlist {
+            background: #ffffff;
+
+            border: 1px solid #eaecf0;
+            border-radius: 20px;
+
+            padding: 70px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(16, 24, 40, 0.06);
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #fff1f2;
+
+            font-size: 38px;
+        }
+
+        .empty-wishlist h2 {
+            margin: 0 0 10px;
+
+            font-size: 25px;
+            color: #101828;
+        }
+
+        .empty-wishlist p {
+            margin: 0 0 25px;
+
+            color: #667085;
+            font-size: 15px;
+        }
+
+        .home-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 12px 22px;
+
+            border-radius: 10px;
+
+            background: #4f46e5;
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .home-button:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .wishlist-page {
+                padding: 30px 14px;
+            }
+
+            .wishlist-header {
+                align-items: flex-start;
+            }
+
+            .wishlist-title-area h1 {
+                font-size: 28px;
+            }
+
+            .wishlist-title-area p {
+                font-size: 14px;
+            }
+
+            .heart-icon {
+                font-size: 30px;
+            }
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image-box {
+                height: 210px;
+            }
+
+            .button-row {
+                grid-template-columns: 1fr;
+            }
+
+            .remove-button {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="wishlist-page">
+
+    <div class="wishlist-container">
+
+
+        <!-- HEADER -->
+
+        <div class="wishlist-header">
+
+            <div class="wishlist-title-area">
+
+                <h1>
+                    My Wishlist
+                    <span class="heart-icon">❤️</span>
+                </h1>
+
+                <p>
+                    Your saved products are collected here.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if wishlist_items %}
+
+
+            <!-- PRODUCTS -->
+
+            <div class="wishlist-grid">
+
+
+                {% for item in wishlist_items %}
+
+
+                    <div class="wishlist-item">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="product-image-box">
+
+                            <img
+                                src="{{ item.product.image.url }}"
+                                alt="{{ item.product.name }}"
+                            >
+
+                        </div>
+
+
+                        <!-- INFO -->
+
+                        <div class="product-info">
+
+                            <h2>
+                                {{ item.product.name }}
+                            </h2>
+
+                            <p class="product-price">
+                                Rs {{ item.product.price }}
+                            </p>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="button-row">
+
+
+                                <a
+                                    href="{% url 'product_detail' item.product.id %}"
+                                    class="wishlist-button view-button"
+                                >
+                                    👁 View Product
+                                </a>
+
+
+                                <a
+                                    href="{% url 'add_to_cart' item.product.id %}"
+                                    class="wishlist-button cart-button"
+                                >
+                                    🛒 Add To Cart
+                                </a>
+
+
+                                <a
+                                    href="{% url 'remove_from_wishlist' item.id %}"
+                                    class="wishlist-button remove-button"
+                                >
+                                    ♡ Remove from Wishlist
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- EMPTY WISHLIST -->
+
+            <div class="empty-wishlist">
+
+                <div class="empty-icon">
+                    💗
+                </div>
+
+                <h2>
+                    Your Wishlist is Empty
+                </h2>
+
+                <p>
+                    Save products you love and find them here later.
+                </p>
+
+                <a
+                    href="/#products-section"
+                    class="home-button"
+                >
+                    🛍 Continue Shopping
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

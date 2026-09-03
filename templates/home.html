@@ -1,0 +1,2125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mashal Book Depot</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div
+    id="sidebar"
+    class="sidebar"
+>
+
+    <div class="close-btn">
+        ✖
+    </div>
+
+
+    <div class="sidebar-header">
+
+        {% if user.is_authenticated and user.gender == 'female' %}
+
+            <img
+                src="{% static 'images/female-avatar.jpg' %}"
+                class="sidebar-avatar"
+                alt=""
+            >
+
+        {% else %}
+
+            <img
+                src="{% static 'images/male-avatar.png' %}"
+                class="sidebar-avatar"
+                alt=""
+            >
+
+        {% endif %}
+
+
+        <h3>
+            Assalamu Alaikum
+        </h3>
+
+
+        <p>
+            {{ user.username }}
+        </p>
+
+    </div>
+
+
+    <a href="/">
+        🏠 Home
+    </a>
+
+
+    <a href="/#products-section">
+        📚 Products
+    </a>
+
+
+    <a href="{% url 'my_wishlist' %}">
+        ❤️ Wishlist
+
+        <span
+            class="sidebar-wishlist-count"
+            id="sidebar-wishlist-count"
+        >
+            ({{ wishlist_count }})
+        </span>
+
+    </a>
+
+
+    <a href="{% url 'view_cart' %}">
+        🛒 Cart
+    </a>
+
+
+    {% if user.is_authenticated %}
+
+        <a href="{% url 'my_orders' %}">
+            📦 My Orders
+        </a>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+
+    <div class="menu-btn">
+        ☰
+    </div>
+
+
+    <div class="logo">
+        Mashal Book Depot
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Search books & stationery"
+                value="{{ request.GET.q }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- HEADER LINKS -->
+
+    <div class="header-links">
+
+
+        <!-- WISHLIST -->
+
+        <div class="header-item">
+
+            <a
+                href="{% url 'my_wishlist' %}"
+                id="wishlist-counter"
+            >
+                ❤️ ({{ wishlist_count }})
+            </a>
+
+        </div>
+
+
+        <!-- CART -->
+
+        <div class="header-item">
+
+            <a
+                href="{% url 'view_cart' %}"
+                id="cart-counter"
+            >
+                🛒 ({{ cart_count }})
+            </a>
+
+        </div>
+
+
+        {% if user.is_authenticated %}
+
+
+            <div class="login-btn">
+                Welcome {{ user.username }}
+            </div>
+
+
+            <div class="login-btn">
+
+                <a href="{% url 'my_orders' %}">
+                    My Orders
+                </a>
+
+            </div>
+
+
+            <div class="login-btn">
+
+                <form
+                    action="{% url 'logout' %}"
+                    method="post"
+                >
+
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Logout
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="login-btn">
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            </div>
+
+
+            <div class="login-btn">
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-background">
+
+        <img
+            src="{% static 'images/banner.jpg' %}"
+            alt="Mashal Book Depot"
+        >
+
+    </div>
+
+
+    <div class="hero-overlay"></div>
+
+
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+
+
+    <div class="hero-content">
+
+
+        <div class="hero-left">
+
+
+            <div class="hero-badge">
+                📚 Pakistan's Smartest Book Store
+            </div>
+
+
+            <h1>
+                Welcome to Mashal Book Depot
+            </h1>
+
+
+            <p>
+                Books, Stationery, Printing & School Essentials
+            </p>
+
+
+            <a href="#products-section">
+
+                <button type="button">
+                    Order Now
+                </button>
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     DASHBOARD STATS
+========================================================= -->
+
+<section class="stats-section">
+
+
+    <div class="stats-container">
+
+
+        <div class="stat-card">
+
+            <h2 id="wishlist-stat-counter">
+                {{ wishlist_count }}
+            </h2>
+
+            <p>
+                Wishlist Items
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h2 id="cart-stat-counter">
+                {{ cart_count }}
+            </h2>
+
+            <p>
+                Cart Items
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h2>
+                {{ my_orders_count }}
+            </h2>
+
+            <p>
+                My Orders
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+<!-- =========================================================
+     PRINTING SERVICE CTA
+========================================================= -->
+
+<section class="printing-cta-section">
+
+    <a
+        href="{% url 'create_printing_order' %}"
+        class="printing-cta"
+    >
+
+        <span class="printing-cta-icon">
+            🖨️
+        </span>
+
+        <span class="printing-cta-text">
+            <strong>Print Your Documents</strong>
+            <small>PDF • Word • Images • Multiple Files</small>
+        </span>
+
+        <span class="printing-cta-arrow">
+            →
+        </span>
+
+    </a>
+
+</section>
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+
+<section class="categories">
+
+
+    <div class="section-small-title">
+        SHOP BY CATEGORY
+    </div>
+
+
+    <h2>
+        Find What You Need
+    </h2>
+
+
+    <div class="category-container">
+
+
+        <a
+            href="/#products-section"
+            class="category-link"
+        >
+
+            <div class="category-card">
+
+                <span class="category-icon">
+                    🛍️
+                </span>
+
+                <h3>
+                    All Items
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        {% for category in categories %}
+
+
+        <a
+            href="/?category={{ category.id }}#products-section"
+            class="category-link"
+        >
+
+            <div class="category-card">
+
+                <h3>
+                    {{ category.name }}
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCTS SECTION
+========================================================= -->
+
+<section
+    class="products"
+    id="products-section"
+>
+
+
+    <!-- PRODUCT SECTION HEADER -->
+
+    <div class="products-heading">
+
+
+        <div class="products-small-title">
+
+            <span></span>
+
+            ⭐ HANDPICKED FOR YOU
+
+            <span></span>
+
+        </div>
+
+
+        <h2>
+            Latest Products
+        </h2>
+
+
+        <p>
+            Quality books that inspire learning and build a brighter future.
+        </p>
+
+
+        <div class="heading-decoration">
+
+            <span></span>
+
+            <b></b>
+
+        </div>
+
+
+    </div>
+
+
+
+    {% if products %}
+
+
+        <div class="product-container">
+
+
+            {% for product in products %}
+
+
+            <article
+                class="product-card"
+                data-product-card="{{ product.id }}"
+            >
+
+
+                <!-- =================================================
+                     TOP WISHLIST HEART
+                ================================================= -->
+
+                {% if product.stock > 0 %}
+
+
+                    {% if product.id in wishlisted_products %}
+
+                        <button
+                            type="button"
+                            class="wishlist-heart wishlist-btn added"
+                            data-product="{{ product.id }}"
+                            data-url="{% url 'add_to_wishlist' product.id %}"
+                            aria-label="Remove from wishlist"
+                            title="Remove from wishlist"
+                        >
+                            ♥
+                        </button>
+
+                    {% else %}
+
+                        <button
+                            type="button"
+                            class="wishlist-heart wishlist-btn"
+                            data-product="{{ product.id }}"
+                            data-url="{% url 'add_to_wishlist' product.id %}"
+                            aria-label="Add to wishlist"
+                            title="Add to wishlist"
+                        >
+                            ♡
+                        </button>
+
+                    {% endif %}
+
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     PRODUCT IMAGE AREA
+                ================================================= -->
+
+                <a
+                    href="{% url 'product_detail' product.id %}"
+                    class="product-image-box"
+                >
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                            class="product-image"
+                        >
+
+                    {% else %}
+
+                        <div class="no-product-image">
+                            📚
+                        </div>
+
+                    {% endif %}
+
+                </a>
+
+
+
+                <!-- =================================================
+                     PRODUCT INFORMATION
+                ================================================= -->
+
+                <div class="product-info">
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <h3>
+
+                        <a
+                            href="{% url 'product_detail' product.id %}"
+                        >
+                            {{ product.name }}
+                        </a>
+
+                    </h3>
+
+
+
+                    <!-- CATEGORY -->
+
+                    {% if product.category %}
+
+                        <div class="product-category">
+
+                            <span>
+                                📖
+                            </span>
+
+                            {{ product.category.name }}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="product-category">
+
+                            <span>
+                                📖
+                            </span>
+
+                            Book
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    {% if product.description %}
+
+                        <div class="product-description">
+
+                            <span class="description-text">
+                                {{ product.description }}
+                            </span>
+
+                            <a
+                                href="{% url 'product_detail' product.id %}"
+                                class="see-more"
+                            >
+                                ... See more
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="product-price">
+                        Rs. {{ product.price }}
+                    </div>
+
+
+
+                    <!-- RATING -->
+
+                    <div class="product-rating">
+
+                        <span class="star">
+                            ★
+                        </span>
+
+                        <span>
+                            {{ product.average_rating }}/5
+                        </span>
+
+                        <span class="review-text">
+                            ({{ product.total_reviews }} Reviews)
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- STOCK -->
+
+                    {% if product.stock == 0 %}
+
+                        <div class="stock-message out-stock">
+                            Out Of Stock
+                        </div>
+
+                    {% elif product.stock <= 3 %}
+
+                        <div class="stock-message low-stock">
+                            Only {{ product.stock }} Left
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRODUCT ACTIONS
+                ================================================= -->
+
+                {% if product.stock > 0 %}
+
+
+                    <div class="product-actions">
+
+
+                        <!-- =================================================
+                             CART
+                        ================================================= -->
+
+                        {% if product.id in cart_products %}
+
+
+                            <button
+                                type="button"
+                                class="ajax-cart-btn added"
+                                data-product="{{ product.id }}"
+                                data-url="{% url 'add_to_cart' product.id %}"
+                            >
+
+                                <span class="cart-success-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    Added
+                                </span>
+
+                            </button>
+
+
+                        {% else %}
+
+
+                            <button
+                                type="button"
+                                class="ajax-cart-btn"
+                                data-product="{{ product.id }}"
+                                data-url="{% url 'add_to_cart' product.id %}"
+                            >
+
+                                <span class="cart-icon">
+                                    🛒
+                                </span>
+
+                                <span class="cart-button-text">
+                                    Add to Cart
+                                </span>
+
+                            </button>
+
+
+                        {% endif %}
+
+
+
+                        <!-- =================================================
+                             WISHLIST
+                        ================================================= -->
+
+                        {% if product.id in wishlisted_products %}
+
+                            <button
+                                type="button"
+                                class="wishlist-btn wishlist-bottom added"
+                                data-product="{{ product.id }}"
+                                data-url="{% url 'add_to_wishlist' product.id %}"
+                            >
+
+                                <span>
+                                    ♥
+                                </span>
+
+                                Wishlist
+
+                            </button>
+
+                        {% else %}
+
+                            <button
+                                type="button"
+                                class="wishlist-btn wishlist-bottom"
+                                data-product="{{ product.id }}"
+                                data-url="{% url 'add_to_wishlist' product.id %}"
+                            >
+
+                                <span>
+                                    ♡
+                                </span>
+
+                                Wishlist
+
+                            </button>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <div class="product-actions">
+
+
+                        <button
+                            type="button"
+                            class="out-of-stock-button"
+                            disabled
+                        >
+                            Out Of Stock
+                        </button>
+
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </article>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <!-- VIEW ALL -->
+
+        <div class="view-all-wrapper">
+
+            <div class="view-line"></div>
+
+            <a
+                href="/#products-section"
+                class="view-all-button"
+            >
+                View All Products
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+            <div class="view-line"></div>
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="no-results">
+
+            <div class="no-results-icon">
+                📚
+            </div>
+
+            <h3>
+                Product Not Available
+            </h3>
+
+            <p>
+                Try another keyword.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</section>
+
+
+
+<!-- =========================================================
+     ADD TO CART JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           INITIAL CART COUNT
+        ===================================================== */
+
+        const serverCartCount =
+            Number("{{ cart_count|default:0 }}");
+
+
+        localStorage.setItem(
+            "cart_count",
+            serverCartCount
+        );
+
+
+
+        /* =====================================================
+           UPDATE CART COUNTERS
+        ===================================================== */
+
+        function updateCartCounters(count) {
+
+            count = Number(count) || 0;
+
+
+            /* HEADER CART */
+
+            const headerCart =
+                document.getElementById(
+                    "cart-counter"
+                );
+
+
+            if (headerCart) {
+
+                headerCart.textContent =
+                    "🛒 (" + count + ")";
+
+            }
+
+
+
+            /* DASHBOARD CART */
+
+            const cartStat =
+                document.getElementById(
+                    "cart-stat-counter"
+                );
+
+
+            if (cartStat) {
+
+                cartStat.textContent =
+                    count;
+
+            }
+
+
+
+            /* ANY OTHER CART COUNTERS */
+
+            document
+                .querySelectorAll(
+                    ".cart-count"
+                )
+                .forEach(
+                    function (counter) {
+
+                        counter.textContent =
+                            count;
+
+                    }
+                );
+
+
+
+            /* SAVE */
+
+            localStorage.setItem(
+                "cart_count",
+                count
+            );
+
+        }
+
+
+
+        /* =====================================================
+           SYNC CART COUNTER
+        ===================================================== */
+
+        function syncCartCounter() {
+
+            const savedCount =
+                localStorage.getItem(
+                    "cart_count"
+                );
+
+
+            if (savedCount !== null) {
+
+                updateCartCounters(
+                    Number(savedCount)
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ADD TO CART BUTTONS
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".ajax-cart-btn"
+            )
+            .forEach(
+                function (button) {
+
+
+                    button.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+
+                            /* Already processing */
+
+                            if (
+                                button.dataset.loading === "true"
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            /* Already added */
+
+                            if (
+                                button.classList.contains(
+                                    "added"
+                                )
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const productId =
+                                button.dataset.product;
+
+
+                            const url =
+                                button.dataset.url;
+
+
+                            if (
+                                !productId ||
+                                !url
+                            ) {
+
+                                console.error(
+                                    "Add to Cart URL or Product ID missing."
+                                );
+
+                                return;
+
+                            }
+
+
+
+                            /* =================================================
+                               LOADING
+                            ================================================= */
+
+                            button.dataset.loading =
+                                "true";
+
+
+                            button.disabled =
+                                true;
+
+
+                            button.classList.add(
+                                "loading"
+                            );
+
+
+                            button.innerHTML = `
+                                <span>
+                                    ⏳
+                                </span>
+                                <span>
+                                    Adding...
+                                </span>
+                            `;
+
+
+
+                            /* =================================================
+                               AJAX REQUEST
+                            ================================================= */
+
+                            fetch(
+                                url,
+                                {
+                                    method: "GET",
+
+                                    headers: {
+                                        "X-Requested-With":
+                                            "XMLHttpRequest",
+
+                                        "Accept":
+                                            "application/json"
+                                    },
+
+                                    credentials:
+                                        "same-origin"
+                                }
+                            )
+
+                            .then(
+                                function (response) {
+
+                                    if (
+                                        !response.ok
+                                    ) {
+
+                                        throw new Error(
+                                            "Server error: " +
+                                            response.status
+                                        );
+
+                                    }
+
+
+                                    return response.json();
+
+                                }
+                            )
+
+                            .then(
+                                function (data) {
+
+
+                                    /* =========================================
+                                       LOGIN REQUIRED
+                                    ========================================= */
+
+                                    if (
+                                        data.login_required
+                                    ) {
+
+                                        window.location.href =
+                                            "{% url 'login' %}";
+
+                                        return;
+
+                                    }
+
+
+
+                                    /* =========================================
+                                       OUT OF STOCK
+                                    ========================================= */
+
+                                    if (
+                                        data.out_of_stock
+                                    ) {
+
+                                        button.disabled =
+                                            false;
+
+                                        button.dataset.loading =
+                                            "false";
+
+                                        button.classList.remove(
+                                            "loading"
+                                        );
+
+
+                                        button.innerHTML = `
+                                            <span>
+                                                ❌
+                                            </span>
+
+                                            <span>
+                                                Out Of Stock
+                                            </span>
+                                        `;
+
+                                        return;
+
+                                    }
+
+
+
+                                    /* =========================================
+                                       SUCCESS
+                                    ========================================= */
+
+                                    if (
+                                        data.success
+                                    ) {
+
+
+                                        /* UPDATE COUNTERS */
+
+                                        updateCartCounters(
+                                            data.cart_count
+                                        );
+
+
+
+                                        /* UPDATE BUTTON */
+
+                                        button.classList.remove(
+                                            "loading"
+                                        );
+
+                                        button.classList.add(
+                                            "added"
+                                        );
+
+
+                                        button.disabled =
+                                            false;
+
+
+                                        button.dataset.loading =
+                                            "false";
+
+
+                                        button.innerHTML = `
+                                            <span class="cart-success-icon">
+                                                ✓
+                                            </span>
+
+                                            <span>
+                                                Added
+                                            </span>
+                                        `;
+
+
+                                        return;
+
+                                    }
+
+
+
+                                    /* =========================================
+                                       UNKNOWN RESPONSE
+                                    ========================================= */
+
+                                    throw new Error(
+                                        data.message ||
+                                        "Unable to add product to cart."
+                                    );
+
+                                }
+                            )
+
+                            .catch(
+                                function (error) {
+
+                                    console.error(
+                                        "Add to Cart Error:",
+                                        error
+                                    );
+
+
+                                    button.disabled =
+                                        false;
+
+
+                                    button.dataset.loading =
+                                        "false";
+
+
+                                    button.classList.remove(
+                                        "loading"
+                                    );
+
+
+                                    button.innerHTML = `
+                                        <span class="cart-icon">
+                                            🛒
+                                        </span>
+
+                                        <span class="cart-button-text">
+                                            Add to Cart
+                                        </span>
+                                    `;
+
+
+                                    alert(
+                                        "Unable to add item to cart. Please try again."
+                                    );
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           INITIAL SYNC
+        ===================================================== */
+
+        syncCartCounter();
+
+    }
+);
+
+
+
+/* =========================================================
+   BROWSER BACK BUTTON / BF CACHE
+========================================================= */
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        const savedCount =
+            localStorage.getItem(
+                "cart_count"
+            );
+
+
+        if (savedCount !== null) {
+
+            const headerCart =
+                document.getElementById(
+                    "cart-counter"
+                );
+
+
+            if (headerCart) {
+
+                headerCart.textContent =
+                    "🛒 (" +
+                    Number(savedCount) +
+                    ")";
+
+            }
+
+
+            const cartStat =
+                document.getElementById(
+                    "cart-stat-counter"
+                );
+
+
+            if (cartStat) {
+
+                cartStat.textContent =
+                    Number(savedCount);
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+<!-- =========================================================
+     WISHLIST JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /* =====================================================
+           UPDATE ALL WISHLIST COUNTERS
+        ===================================================== */
+
+        function updateWishlistCounters(count) {
+
+            count = Number(count) || 0;
+
+
+            /* HEADER WISHLIST */
+
+            const wishlistCounter =
+                document.getElementById(
+                    "wishlist-counter"
+                );
+
+            if (wishlistCounter) {
+
+                wishlistCounter.textContent =
+                    "❤️ (" + count + ")";
+
+            }
+
+
+            /* SIDEBAR WISHLIST */
+
+            const sidebarWishlistCounter =
+                document.getElementById(
+                    "sidebar-wishlist-count"
+                );
+
+            if (sidebarWishlistCounter) {
+
+                sidebarWishlistCounter.textContent =
+                    "(" + count + ")";
+
+            }
+
+
+            /* DASHBOARD WISHLIST */
+
+            const wishlistStatCounter =
+                document.getElementById(
+                    "wishlist-stat-counter"
+                );
+
+            if (wishlistStatCounter) {
+
+                wishlistStatCounter.textContent =
+                    count;
+
+            }
+
+
+            /* OTHER WISHLIST COUNTERS */
+
+            document
+                .querySelectorAll(
+                    ".wishlist-count"
+                )
+                .forEach(
+                    function (element) {
+
+                        element.textContent =
+                            count;
+
+                    }
+                );
+
+
+            /* SAVE */
+
+            localStorage.setItem(
+                "wishlist_count",
+                count
+            );
+
+        }
+
+
+
+        /* =====================================================
+           WISHLIST BUTTONS
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".wishlist-btn"
+            )
+            .forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+
+                            /* =================================
+                               ALREADY PROCESSING
+                            ================================= */
+
+                            if (
+                                button.dataset.loading === "true"
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            /* =================================
+                               GET URL
+                            ================================= */
+
+                            const url =
+                                button.dataset.url;
+
+
+                            if (!url) {
+
+                                console.error(
+                                    "Wishlist URL missing."
+                                );
+
+                                return;
+
+                            }
+
+
+                            /* =================================
+                               LOADING
+                            ================================= */
+
+                            button.dataset.loading =
+                                "true";
+
+                            button.disabled =
+                                true;
+
+                            button.classList.add(
+                                "loading"
+                            );
+
+
+                            /* =================================
+                               SAVE ORIGINAL HTML
+                            ================================= */
+
+                            const originalHTML =
+                                button.innerHTML;
+
+
+                            /* =================================
+                               SHOW LOADING
+                            ================================= */
+
+                            button.innerHTML = `
+                                <span>
+                                    ⏳
+                                </span>
+                            `;
+
+
+                            /* =================================
+                               AJAX REQUEST
+                            ================================= */
+
+                            fetch(
+                                url,
+                                {
+                                    method: "GET",
+
+                                    headers: {
+                                        "X-Requested-With":
+                                            "XMLHttpRequest",
+
+                                        "Accept":
+                                            "application/json"
+                                    },
+
+                                    credentials:
+                                        "same-origin"
+                                }
+                            )
+
+
+                            /* =================================
+                               RESPONSE
+                            ================================= */
+
+                            .then(
+                                function (response) {
+
+                                    if (
+                                        !response.ok
+                                    ) {
+
+                                        throw new Error(
+                                            "Server error: " +
+                                            response.status
+                                        );
+
+                                    }
+
+
+                                    return response.json();
+
+                                }
+                            )
+
+
+                            /* =================================
+                               DATA
+                            ================================= */
+
+                            .then(
+                                function (data) {
+
+                                    /* =========================
+                                       LOGIN REQUIRED
+                                    ========================= */
+
+                                    if (
+                                        data.login_required
+                                    ) {
+
+                                        window.location.href =
+                                            "{% url 'login' %}";
+
+                                        return;
+
+                                    }
+
+
+                                    /* =========================
+                                       SUCCESS
+                                    ========================= */
+
+                                    if (
+                                        data.success
+                                    ) {
+
+                                        const productId =
+                                            String(
+                                                data.product_id
+                                            );
+
+
+                                        /*
+                                         * Update counters
+                                         */
+
+                                        updateWishlistCounters(
+                                            data.wishlist_count
+                                        );
+
+
+                                        /*
+                                         * Find BOTH wishlist
+                                         * buttons belonging
+                                         * to this product.
+                                         *
+                                         * Top heart + bottom
+                                         * wishlist button.
+                                         */
+
+                                        document
+                                            .querySelectorAll(
+                                                ".wishlist-btn"
+                                            )
+                                            .forEach(
+                                                function (otherButton) {
+
+                                                    if (
+                                                        String(
+                                                            otherButton.dataset.product
+                                                        ) === productId
+                                                    ) {
+
+                                                        otherButton.classList.remove(
+                                                            "loading"
+                                                        );
+
+
+                                                        if (
+                                                            data.added
+                                                        ) {
+
+                                                            /*
+                                                             * PRODUCT ADDED
+                                                             */
+
+                                                            otherButton.classList.add(
+                                                                "added"
+                                                            );
+
+
+                                                            /*
+                                                             * TOP HEART
+                                                             */
+
+                                                            if (
+                                                                otherButton.classList.contains(
+                                                                    "wishlist-heart"
+                                                                )
+                                                            ) {
+
+                                                                otherButton.innerHTML =
+                                                                    "♥";
+
+                                                                otherButton.setAttribute(
+                                                                    "aria-label",
+                                                                    "Remove from wishlist"
+                                                                );
+
+                                                                otherButton.setAttribute(
+                                                                    "title",
+                                                                    "Remove from wishlist"
+                                                                );
+
+                                                            }
+
+
+                                                            /*
+                                                             * BOTTOM BUTTON
+                                                             */
+
+                                                            else {
+
+                                                                otherButton.innerHTML = `
+                                                                    <span>
+                                                                        ♥
+                                                                    </span>
+
+                                                                    Wishlist
+                                                                `;
+
+                                                            }
+
+                                                        }
+
+                                                        else {
+
+                                                            /*
+                                                             * PRODUCT REMOVED
+                                                             */
+
+                                                            otherButton.classList.remove(
+                                                                "added"
+                                                            );
+
+
+                                                            /*
+                                                             * TOP HEART
+                                                             */
+
+                                                            if (
+                                                                otherButton.classList.contains(
+                                                                    "wishlist-heart"
+                                                                )
+                                                            ) {
+
+                                                                otherButton.innerHTML =
+                                                                    "♡";
+
+                                                                otherButton.setAttribute(
+                                                                    "aria-label",
+                                                                    "Add to wishlist"
+                                                                );
+
+                                                                otherButton.setAttribute(
+                                                                    "title",
+                                                                    "Add to wishlist"
+                                                                );
+
+                                                            }
+
+
+                                                            /*
+                                                             * BOTTOM BUTTON
+                                                             */
+
+                                                            else {
+
+                                                                otherButton.innerHTML = `
+                                                                    <span>
+                                                                        ♡
+                                                                    </span>
+
+                                                                    Wishlist
+                                                                `;
+
+                                                            }
+
+                                                        }
+
+
+                                                        /*
+                                                         * Re-enable
+                                                         * button
+                                                         */
+
+                                                        otherButton.disabled =
+                                                            false;
+
+                                                        otherButton.dataset.loading =
+                                                            "false";
+
+                                                    }
+
+                                                }
+                                            );
+
+
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * UNKNOWN RESPONSE
+                                     */
+
+                                    throw new Error(
+                                        data.message ||
+                                        "Wishlist request failed."
+                                    );
+
+                                }
+                            )
+
+
+                            /* =================================
+                               ERROR
+                            ================================= */
+
+                            .catch(
+                                function (error) {
+
+                                    console.error(
+                                        "Wishlist Error:",
+                                        error
+                                    );
+
+
+                                    /*
+                                     * Restore button
+                                     */
+
+                                    button.disabled =
+                                        false;
+
+                                    button.dataset.loading =
+                                        "false";
+
+                                    button.classList.remove(
+                                        "loading"
+                                    );
+
+
+                                    button.innerHTML =
+                                        originalHTML;
+
+
+                                    alert(
+                                        "Unable to update wishlist. Please try again."
+                                    );
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           INITIAL WISHLIST COUNT
+        ===================================================== */
+
+        const serverWishlistCount =
+            Number(
+                "{{ wishlist_count|default:0 }}"
+            );
+
+
+        localStorage.setItem(
+            "wishlist_count",
+            serverWishlistCount
+        );
+
+
+        updateWishlistCounters(
+            serverWishlistCount
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   BROWSER BACK BUTTON / BF CACHE
+========================================================= */
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        const savedCount =
+            localStorage.getItem(
+                "wishlist_count"
+            );
+
+
+        if (
+            savedCount !== null
+        ) {
+
+            const count =
+                Number(savedCount);
+
+
+            const wishlistCounter =
+                document.getElementById(
+                    "wishlist-counter"
+                );
+
+
+            if (wishlistCounter) {
+
+                wishlistCounter.textContent =
+                    "❤️ (" + count + ")";
+
+            }
+
+
+            const sidebarWishlistCounter =
+                document.getElementById(
+                    "sidebar-wishlist-count"
+                );
+
+
+            if (sidebarWishlistCounter) {
+
+                sidebarWishlistCounter.textContent =
+                    "(" + count + ")";
+
+            }
+
+
+            const wishlistStatCounter =
+                document.getElementById(
+                    "wishlist-stat-counter"
+                );
+
+
+            if (wishlistStatCounter) {
+
+                wishlistStatCounter.textContent =
+                    count;
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       SIDEBAR ELEMENTS
+    ===================================================== */
+
+    const menuBtn =
+        document.querySelector(".menu-btn");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const overlay =
+        document.getElementById("overlay");
+
+    const closeBtn =
+        document.querySelector(".close-btn");
+
+
+    /* =====================================================
+       SAFETY CHECK
+    ===================================================== */
+
+    if (!menuBtn || !sidebar || !overlay) {
+
+        console.error(
+            "Sidebar elements not found."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       OPEN SIDEBAR
+    ===================================================== */
+
+    menuBtn.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            sidebar.classList.add("active");
+
+            overlay.classList.add("active");
+
+            document.body.classList.add(
+                "sidebar-open"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE SIDEBAR FUNCTION
+    ===================================================== */
+
+    function closeSidebar() {
+
+        sidebar.classList.remove("active");
+
+        overlay.classList.remove("active");
+
+        document.body.classList.remove(
+            "sidebar-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                closeSidebar();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CLICK OUTSIDE SIDEBAR
+    ===================================================== */
+
+    overlay.addEventListener(
+        "click",
+        function () {
+
+            closeSidebar();
+
+        }
+    );
+
+
+    /* =====================================================
+       ESC KEY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                closeSidebar();
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+</body>
+
+</html>

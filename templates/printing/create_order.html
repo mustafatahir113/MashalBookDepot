@@ -1,0 +1,1880 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Printing Service - Mashal Book Depot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7ff;
+            color: #222;
+        }
+
+        .printing-page {
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .printing-container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .printing-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .printing-header h1 {
+            margin: 0 0 10px;
+            font-size: 34px;
+            color: #4f46e5;
+        }
+
+        .printing-header p {
+            margin: 0;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .printing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label.main-label {
+            display: block;
+            margin-bottom: 9px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .printing-input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+            background: white;
+        }
+
+        .printing-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.10);
+        }
+
+        textarea.printing-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+
+        /* =====================================================
+           FILE UPLOAD
+        ===================================================== */
+
+        .upload-box {
+            border: 2px dashed #a5a5ff;
+            background: #f8f8ff;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: block;
+        }
+
+        .upload-box:hover {
+            border-color: #4f46e5;
+            background: #f1f1ff;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .upload-box h3 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .upload-box p {
+            margin: 5px 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        #files {
+            display: none;
+        }
+
+
+        /* =====================================================
+           SELECTED FILES
+        ===================================================== */
+
+        .selected-files-wrapper {
+            margin-top: 18px;
+        }
+
+        .selected-files-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .selected-files-header h3 {
+            margin: 0;
+            font-size: 17px;
+            color: #222;
+        }
+
+        .file-count {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .selected-files {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .selected-file {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            padding: 12px;
+            background: #f8f9ff;
+            border: 1px solid #e4e7f5;
+            border-radius: 14px;
+            transition: 0.2s ease;
+        }
+
+        .selected-file:hover {
+            border-color: #c7c9ff;
+            box-shadow: 0 5px 18px rgba(79, 70, 229, 0.08);
+        }
+
+        .file-preview {
+            width: 68px;
+            height: 68px;
+            min-width: 68px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #eef1ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .file-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .file-type-icon {
+            font-size: 30px;
+        }
+
+        .selected-file-info {
+            min-width: 0;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .selected-file-name {
+            display: block;
+            font-weight: 700;
+            color: #222;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 5px;
+        }
+
+        .selected-file-size {
+            display: block;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .preview-hint {
+            display: block;
+            margin-top: 4px;
+            color: #4f46e5;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .remove-file {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            color: #555;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 30px;
+            padding: 0;
+            z-index: 5;
+        }
+
+        .remove-file:hover {
+            background: #fff0f0;
+            color: #d92d20;
+        }
+
+        .add-more-files {
+            margin-top: 14px;
+            width: 100%;
+            padding: 13px;
+            border: 1.5px dashed #8b8df8;
+            border-radius: 12px;
+            background: #f8f8ff;
+            color: #4f46e5;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .add-more-files:hover {
+            background: #eeeeff;
+            border-color: #4f46e5;
+        }
+
+
+        /* =====================================================
+           PREVIEW MODAL
+        ===================================================== */
+
+        .preview-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            z-index: 99999;
+        }
+
+        .preview-modal.active {
+            display: flex;
+        }
+
+        .preview-modal-content {
+            width: min(1000px, 95vw);
+            height: min(800px, 90vh);
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.30);
+        }
+
+        .preview-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .preview-modal-title {
+            min-width: 0;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .close-preview {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: #f1f3f7;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .close-preview:hover {
+            background: #ffecec;
+            color: #d92d20;
+        }
+
+        .preview-modal-body {
+            flex: 1;
+            min-height: 0;
+            background: #f4f5f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .preview-modal-body img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .preview-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .preview-text {
+            width: 100%;
+            height: 100%;
+            padding: 25px;
+            margin: 0;
+            white-space: pre-wrap;
+            overflow: auto;
+            background: white;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .unsupported-preview {
+            text-align: center;
+            padding: 40px;
+            color: #555;
+        }
+
+        .unsupported-preview-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .unsupported-preview h3 {
+            margin: 0 0 10px;
+            color: #222;
+        }
+
+        .unsupported-preview p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           TWO COLUMNS
+        ===================================================== */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           PRICE INFO
+        ===================================================== */
+
+        .price-info {
+            background: #f7f7ff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        .price-info h3 {
+            margin: 0 0 10px;
+            color: #4f46e5;
+        }
+
+        .price-info p {
+            margin: 6px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           ERRORS
+        ===================================================== */
+
+        .errors {
+            background: #fff0f0;
+            color: #b42318;
+            border: 1px solid #f5b5b5;
+            padding: 13px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .field-errors {
+            margin-top: 6px;
+            color: #b42318;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .submit-button {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 20px;
+            background: #4f46e5;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .printing-page {
+                padding: 20px 12px;
+            }
+
+            .printing-card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            .printing-header h1 {
+                font-size: 27px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .selected-files {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-modal {
+                padding: 10px;
+            }
+
+            .preview-modal-content {
+                width: 100%;
+                height: 90vh;
+                border-radius: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="printing-page">
+
+    <div class="printing-container">
+
+
+        <!-- =====================================================
+             HEADER
+        ===================================================== -->
+
+        <div class="printing-header">
+
+            <h1>
+                🖨️ Printing Service
+            </h1>
+
+            <p>
+                Upload your files and tell us your printing requirements.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MAIN CARD
+        ===================================================== -->
+
+        <div class="printing-card">
+
+
+            <!-- ERRORS -->
+
+            {% if form.non_field_errors %}
+
+                <div class="errors">
+
+                    {% for error in form.non_field_errors %}
+
+                        <div>
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 FORM
+            ================================================= -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                id="printing-form"
+            >
+
+                {% csrf_token %}
+
+
+
+                <!-- =================================================
+                     FILE UPLOAD
+                ================================================= -->
+
+                <div class="form-group">
+
+                    <label class="main-label">
+                        Upload Your Files
+                    </label>
+
+
+                    <label
+                        for="files"
+                        class="upload-box"
+                    >
+
+                        <div class="upload-icon">
+                            📁
+                        </div>
+
+                        <h3>
+                            Click here to upload files
+                        </h3>
+
+                        <p>
+                            PDF, Word, images and other files
+                        </p>
+
+                        <p>
+                            You can select multiple files
+                        </p>
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        name="files"
+                        id="files"
+                        multiple
+                    >
+
+
+                    <!-- SELECTED FILES -->
+
+                    <div
+                        id="selected-files-wrapper"
+                        class="selected-files-wrapper"
+                        style="display:none;"
+                    >
+
+                        <div class="selected-files-header">
+
+                            <h3>
+                                Selected Files
+                            </h3>
+
+                            <span
+                                id="file-count"
+                                class="file-count"
+                            >
+                                0 files
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="selected-files"
+                            class="selected-files"
+                        ></div>
+
+
+                        <button
+                            type="button"
+                            id="add-more-files"
+                            class="add-more-files"
+                        >
+                            ＋ Add More Files
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================= -->
+
+                <div class="form-group">
+
+                    <label
+                        class="main-label"
+                        for="{{ form.description.id_for_label }}"
+                    >
+                        Printing Details / Description
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="field-errors">
+
+                            {% for error in form.description.errors %}
+
+                                {{ error }}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =================================================
+                     COPIES + SIDE
+                ================================================= -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label
+                            class="main-label"
+                            for="{{ form.copies.id_for_label }}"
+                        >
+                            Number of Copies
+                        </label>
+
+                        {{ form.copies }}
+
+                        {% if form.copies.errors %}
+
+                            <div class="field-errors">
+
+                                {% for error in form.copies.errors %}
+
+                                    {{ error }}
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label
+                            class="main-label"
+                            for="{{ form.side.id_for_label }}"
+                        >
+                            Printing Side
+                        </label>
+
+                        {{ form.side }}
+
+                        {% if form.side.errors %}
+
+                            <div class="field-errors">
+
+                                {% for error in form.side.errors %}
+
+                                    {{ error }}
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRINT TYPE
+                ================================================= -->
+
+                <div class="form-group">
+
+                    <label
+                        class="main-label"
+                        for="{{ form.print_type.id_for_label }}"
+                    >
+                        Print Type
+                    </label>
+
+                    {{ form.print_type }}
+
+                    {% if form.print_type.errors %}
+
+                        <div class="field-errors">
+
+                            {% for error in form.print_type.errors %}
+
+                                {{ error }}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRICE INFORMATION
+                ================================================= -->
+
+                <div class="price-info">
+
+                    <h3>
+                        💰 Printing Rates
+                    </h3>
+
+                    <p>
+                        Black & White — 1 to 10 copies:
+                        <strong>Rs. 20</strong>
+                    </p>
+
+                    <p>
+                        Black & White — More than 10 copies:
+                        <strong>Rs. 15</strong>
+                    </p>
+
+                    <p>
+                        Color Print — 1 to 10 copies:
+                        <strong>Rs. 40</strong>
+                    </p>
+                    
+                    <p>
+                        Color Print — More than 10 copies:
+                        <strong>Rs. 35</strong>
+                    </p>
+
+                    <p>
+                        Final amount can be adjusted by admin/shopkeeper.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================= -->
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                    id="submit-button"
+                >
+                    🖨️ Submit Printing Order
+                </button>
+
+
+            </form>
+
+
+            <a
+                href="/"
+                class="back-link"
+            >
+                ← Back to Home
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     PREVIEW MODAL
+========================================================= -->
+
+<div
+    id="preview-modal"
+    class="preview-modal"
+    aria-hidden="true"
+>
+
+    <div class="preview-modal-content">
+
+
+        <div class="preview-modal-header">
+
+            <div
+                id="preview-modal-title"
+                class="preview-modal-title"
+            >
+                File Preview
+            </div>
+
+
+            <button
+                type="button"
+                id="close-preview"
+                class="close-preview"
+                aria-label="Close preview"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="preview-modal-body"
+            class="preview-modal-body"
+        ></div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const fileInput =
+            document.getElementById("files");
+
+        const selectedFiles =
+            document.getElementById("selected-files");
+
+        const selectedFilesWrapper =
+            document.getElementById(
+                "selected-files-wrapper"
+            );
+
+        const fileCount =
+            document.getElementById("file-count");
+
+        const addMoreFilesButton =
+            document.getElementById(
+                "add-more-files"
+            );
+
+        const form =
+            document.getElementById("printing-form");
+
+        const submitButton =
+            document.getElementById(
+                "submit-button"
+            );
+
+        const previewModal =
+            document.getElementById(
+                "preview-modal"
+            );
+
+        const previewModalBody =
+            document.getElementById(
+                "preview-modal-body"
+            );
+
+        const previewModalTitle =
+            document.getElementById(
+                "preview-modal-title"
+            );
+
+        const closePreviewButton =
+            document.getElementById(
+                "close-preview"
+            );
+
+
+        /* =====================================================
+           IMPORTANT:
+           Keep ALL selected files in memory.
+        ===================================================== */
+
+        let selectedFileList = [];
+
+
+        /* =====================================================
+           FILE INPUT CHANGE
+        ===================================================== */
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                const newFiles =
+                    Array.from(
+                        fileInput.files
+                    );
+
+
+                newFiles.forEach(
+                    function (file) {
+
+                        /*
+                         * Prevent exact duplicate selection
+                         * of the same file.
+                         */
+
+                        const alreadyExists =
+                            selectedFileList.some(
+                                function (existingFile) {
+
+                                    return (
+                                        existingFile.name === file.name &&
+                                        existingFile.size === file.size &&
+                                        existingFile.lastModified ===
+                                            file.lastModified
+                                    );
+
+                                }
+                            );
+
+
+                        if (!alreadyExists) {
+
+                            selectedFileList.push(
+                                file
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                 * Clear input so the user can
+                 * select the same file again later
+                 * if required.
+                 */
+
+                fileInput.value = "";
+
+
+                renderSelectedFiles();
+
+            }
+        );
+
+
+        /* =====================================================
+           ADD MORE FILES
+        ===================================================== */
+
+        addMoreFilesButton.addEventListener(
+            "click",
+            function () {
+
+                fileInput.click();
+
+            }
+        );
+
+
+        /* =====================================================
+           RENDER FILE LIST
+        ===================================================== */
+
+        function renderSelectedFiles() {
+
+            selectedFiles.innerHTML = "";
+
+
+            if (
+                selectedFileList.length === 0
+            ) {
+
+                selectedFilesWrapper.style.display =
+                    "none";
+
+                fileCount.textContent =
+                    "0 files";
+
+                return;
+
+            }
+
+
+            selectedFilesWrapper.style.display =
+                "block";
+
+
+            fileCount.textContent =
+                selectedFileList.length +
+                (
+                    selectedFileList.length === 1
+                        ? " file"
+                        : " files"
+                );
+
+
+            selectedFileList.forEach(
+                function (file, index) {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "selected-file";
+
+
+                    /* =========================================
+                       PREVIEW THUMBNAIL
+                    ========================================= */
+
+                    const preview =
+                        document.createElement("div");
+
+                    preview.className =
+                        "file-preview";
+
+
+                    createThumbnail(
+                        file,
+                        preview
+                    );
+
+
+                    /* =========================================
+                       FILE INFO
+                    ========================================= */
+
+                    const info =
+                        document.createElement("div");
+
+                    info.className =
+                        "selected-file-info";
+
+
+                    const name =
+                        document.createElement("span");
+
+                    name.className =
+                        "selected-file-name";
+
+                    name.textContent =
+                        file.name;
+
+
+                    const size =
+                        document.createElement("span");
+
+                    size.className =
+                        "selected-file-size";
+
+                    size.textContent =
+                        formatFileSize(
+                            file.size
+                        );
+
+
+                    const hint =
+                        document.createElement("span");
+
+                    hint.className =
+                        "preview-hint";
+
+                    hint.textContent =
+                        getPreviewHint(file);
+
+
+                    info.appendChild(name);
+
+                    info.appendChild(size);
+
+                    info.appendChild(hint);
+
+
+                    /* =========================================
+                       REMOVE BUTTON
+                    ========================================= */
+
+                    const removeButton =
+                        document.createElement("button");
+
+                    removeButton.type =
+                        "button";
+
+                    removeButton.className =
+                        "remove-file";
+
+                    removeButton.innerHTML =
+                        "×";
+
+                    removeButton.title =
+                        "Remove file";
+
+                    removeButton.setAttribute(
+                        "aria-label",
+                        "Remove " + file.name
+                    );
+
+
+                    removeButton.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+
+                            selectedFileList.splice(
+                                index,
+                                1
+                            );
+
+
+                            renderSelectedFiles();
+
+                        }
+                    );
+
+
+                    /* =========================================
+                       CLICK TO PREVIEW
+                    ========================================= */
+
+                    preview.addEventListener(
+                        "click",
+                        function () {
+
+                            openFilePreview(
+                                file
+                            );
+
+                        }
+                    );
+
+
+                    info.addEventListener(
+                        "click",
+                        function () {
+
+                            openFilePreview(
+                                file
+                            );
+
+                        }
+                    );
+
+
+                    card.appendChild(
+                        preview
+                    );
+
+                    card.appendChild(
+                        info
+                    );
+
+                    card.appendChild(
+                        removeButton
+                    );
+
+
+                    selectedFiles.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CREATE THUMBNAIL
+        ===================================================== */
+
+        function createThumbnail(
+            file,
+            container
+        ) {
+
+            if (
+                file.type.startsWith(
+                    "image/"
+                )
+            ) {
+
+                const image =
+                    document.createElement("img");
+
+                image.src =
+                    URL.createObjectURL(file);
+
+                image.alt =
+                    file.name;
+
+                container.appendChild(
+                    image
+                );
+
+                return;
+
+            }
+
+
+            const icon =
+                document.createElement("div");
+
+            icon.className =
+                "file-type-icon";
+
+
+            if (
+                file.type ===
+                "application/pdf" ||
+                file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                icon.textContent =
+                    "📄";
+
+            }
+
+            else if (
+                file.name
+                    .toLowerCase()
+                    .endsWith(".doc") ||
+                file.name
+                    .toLowerCase()
+                    .endsWith(".docx")
+            ) {
+
+                icon.textContent =
+                    "📝";
+
+            }
+
+            else if (
+                file.type.startsWith(
+                    "text/"
+                )
+            ) {
+
+                icon.textContent =
+                    "📃";
+
+            }
+
+            else {
+
+                icon.textContent =
+                    "📁";
+
+            }
+
+
+            container.appendChild(
+                icon
+            );
+
+        }
+
+
+        /* =====================================================
+           PREVIEW HINT
+        ===================================================== */
+
+        function getPreviewHint(file) {
+
+            const name =
+                file.name.toLowerCase();
+
+
+            if (
+                file.type.startsWith("image/")
+            ) {
+
+                return "Click to preview";
+
+            }
+
+
+            if (
+                file.type === "application/pdf" ||
+                name.endsWith(".pdf")
+            ) {
+
+                return "Click to preview PDF";
+
+            }
+
+
+            if (
+                name.endsWith(".txt") ||
+                file.type.startsWith("text/")
+            ) {
+
+                return "Click to preview";
+
+            }
+
+
+            if (
+                name.endsWith(".doc") ||
+                name.endsWith(".docx")
+            ) {
+
+                return "Click for file details";
+
+            }
+
+
+            return "Click for file details";
+
+        }
+
+
+        /* =====================================================
+           OPEN FILE PREVIEW
+        ===================================================== */
+
+        function openFilePreview(file) {
+
+            previewModalBody.innerHTML = "";
+
+            previewModalTitle.textContent =
+                file.name;
+
+
+            const objectUrl =
+                URL.createObjectURL(file);
+
+
+            /* =========================================
+               IMAGE
+            ========================================= */
+
+            if (
+                file.type.startsWith(
+                    "image/"
+                )
+            ) {
+
+                const image =
+                    document.createElement("img");
+
+                image.src =
+                    objectUrl;
+
+                image.alt =
+                    file.name;
+
+
+                previewModalBody.appendChild(
+                    image
+                );
+
+
+                showPreviewModal();
+
+
+                return;
+
+            }
+
+
+            /* =========================================
+               PDF
+            ========================================= */
+
+            if (
+                file.type ===
+                    "application/pdf" ||
+                file.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
+            ) {
+
+                const iframe =
+                    document.createElement("iframe");
+
+                iframe.src =
+                    objectUrl;
+
+                iframe.title =
+                    "PDF Preview";
+
+
+                previewModalBody.appendChild(
+                    iframe
+                );
+
+
+                showPreviewModal();
+
+
+                return;
+
+            }
+
+
+            /* =========================================
+               TEXT FILE
+            ========================================= */
+
+            if (
+                file.type.startsWith(
+                    "text/"
+                ) ||
+                file.name
+                    .toLowerCase()
+                    .endsWith(".txt")
+            ) {
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (event) {
+
+                        const pre =
+                            document.createElement(
+                                "pre"
+                            );
+
+                        pre.className =
+                            "preview-text";
+
+                        pre.textContent =
+                            event.target.result;
+
+
+                        previewModalBody.appendChild(
+                            pre
+                        );
+
+                        showPreviewModal();
+
+                    };
+
+
+                reader.readAsText(file);
+
+
+                return;
+
+            }
+
+
+            /* =========================================
+               WORD / OTHER FILES
+            ========================================= */
+
+            const unsupported =
+                document.createElement(
+                    "div"
+                );
+
+            unsupported.className =
+                "unsupported-preview";
+
+
+            let icon = "📁";
+
+
+            if (
+                file.name
+                    .toLowerCase()
+                    .endsWith(".doc") ||
+                file.name
+                    .toLowerCase()
+                    .endsWith(".docx")
+            ) {
+
+                icon = "📝";
+
+            }
+
+
+            unsupported.innerHTML = `
+
+                <div
+                    class="unsupported-preview-icon"
+                >
+                    ${icon}
+                </div>
+
+                <h3>
+                    ${escapeHtml(file.name)}
+                </h3>
+
+                <p>
+                    File selected successfully.
+                </p>
+
+                <p>
+                    Size:
+                    ${formatFileSize(file.size)}
+                </p>
+
+                <p style="margin-top:12px;">
+                    This file type cannot be
+                    previewed directly in the browser
+                    before submission.
+                </p>
+
+            `;
+
+
+            previewModalBody.appendChild(
+                unsupported
+            );
+
+
+            showPreviewModal();
+
+        }
+
+
+        /* =====================================================
+           SHOW MODAL
+        ===================================================== */
+
+        function showPreviewModal() {
+
+            previewModal.classList.add(
+                "active"
+            );
+
+            previewModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+        /* =====================================================
+           CLOSE MODAL
+        ===================================================== */
+
+        function closePreview() {
+
+            previewModal.classList.remove(
+                "active"
+            );
+
+            previewModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            previewModalBody.innerHTML =
+                "";
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        closePreviewButton.addEventListener(
+            "click",
+            closePreview
+        );
+
+
+        /* Click outside modal */
+
+        previewModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target ===
+                    previewModal
+                ) {
+
+                    closePreview();
+
+                }
+
+            }
+        );
+
+
+        /* ESC key */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    previewModal.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    closePreview();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           FILE SIZE
+        ===================================================== */
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+
+                return bytes + " B";
+
+            }
+
+
+            if (
+                bytes <
+                1024 * 1024
+            ) {
+
+                return (
+                    (bytes / 1024)
+                        .toFixed(1) +
+                    " KB"
+                );
+
+            }
+
+
+            return (
+                (bytes / (1024 * 1024))
+                    .toFixed(1) +
+                " MB"
+            );
+
+        }
+
+
+        /* =====================================================
+           HTML ESCAPE
+        ===================================================== */
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                text;
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           BEFORE SUBMIT
+           Put ALL selected files back into
+           the actual file input.
+        ===================================================== */
+
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+
+                if (
+                    selectedFileList.length === 0
+                ) {
+
+                    event.preventDefault();
+
+
+                    alert(
+                        "Please upload at least one file."
+                    );
+
+
+                    return;
+
+                }
+
+
+                /*
+                 * DataTransfer is used so Django
+                 * receives every selected file.
+                 */
+
+                const dataTransfer =
+                    new DataTransfer();
+
+
+                selectedFileList.forEach(
+                    function (file) {
+
+                        dataTransfer.items.add(
+                            file
+                        );
+
+                    }
+                );
+
+
+                fileInput.files =
+                    dataTransfer.files;
+
+
+                submitButton.disabled =
+                    true;
+
+                submitButton.textContent =
+                    "Uploading... Please wait";
+
+            }
+        );
+
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

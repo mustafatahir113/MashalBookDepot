@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Email Verified</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:Arial,sans-serif;
+
+            background:linear-gradient(
+                135deg,
+                #4facfe,
+                #00f2fe
+            );
+
+            height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .card{
+
+            background:white;
+
+            width:700px;
+
+            padding:50px;
+
+            border-radius:20px;
+
+            text-align:center;
+
+            box-shadow:
+            0 15px 40px rgba(0,0,0,.2);
+
+            animation:pop .7s ease;
+        }
+
+        @keyframes pop{
+
+            from{
+                transform:scale(.8);
+                opacity:0;
+            }
+
+            to{
+                transform:scale(1);
+                opacity:1;
+            }
+        }
+
+        .tick{
+
+            width:120px;
+            height:120px;
+
+            border-radius:50%;
+
+            background:#28a745;
+
+            color:white;
+
+            font-size:60px;
+
+            line-height:120px;
+
+            margin:auto;
+
+            animation:bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce{
+
+            from{
+                transform:translateY(0);
+            }
+
+            to{
+                transform:translateY(-10px);
+            }
+        }
+
+        h1{
+
+            color:#28a745;
+
+            margin-top:25px;
+            margin-bottom:15px;
+        }
+
+        p{
+
+            font-size:18px;
+
+            color:#555;
+
+            line-height:1.8;
+        }
+
+        .btn{
+
+            display:inline-block;
+
+            margin-top:30px;
+
+            background:#0d6efd;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:14px 30px;
+
+            border-radius:10px;
+
+            transition:.3s;
+        }
+
+        .btn:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+            0 10px 20px rgba(0,0,0,.15);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="tick">
+        ✓
+    </div>
+
+    <h1>
+        Email Verified Successfully
+    </h1>
+
+    <p>
+
+        Congratulations 🎉
+
+        Your email has been verified successfully.
+
+        Your account is now active.
+
+        Click the button below to login and continue.
+        
+
+    </p>
+
+    <a href="{% url 'login' %}" class="btn">
+        Login To Your Account
+    </a>
+
+</div>
+
+</body>
+</html>

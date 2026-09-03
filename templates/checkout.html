@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checkout | Mashal Book Depot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f7f9fc 0%,
+                    #eef3f9 100%
+                );
+
+            color: #172b4d;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .checkout-page {
+            min-height: 100vh;
+
+            padding:
+                45px 6% 80px;
+        }
+
+        .checkout-container {
+            max-width: 1150px;
+
+            margin: auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .checkout-header {
+            text-align: center;
+
+            margin-bottom: 40px;
+        }
+
+        .checkout-small-title {
+            color: #e2a000;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+        }
+
+        .checkout-header h1 {
+            margin: 0;
+
+            color: #102d60;
+
+            font-size:
+                clamp(36px, 5vw, 52px);
+
+            font-weight: 900;
+        }
+
+        .checkout-header p {
+            color: #71839d;
+
+            margin: 12px auto 0;
+
+            max-width: 620px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           MAIN GRID
+        ========================= */
+
+        .checkout-layout {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                370px;
+
+            gap: 28px;
+
+            align-items: start;
+        }
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .checkout-card {
+            background: white;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(16,45,96,.07);
+        }
+
+        .card-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin: 0 0 25px;
+
+            color: #102d60;
+
+            font-size: 24px;
+
+            font-weight: 900;
+        }
+
+        .card-subtitle {
+            color: #71839d;
+
+            font-size: 14px;
+
+            margin:
+                -15px 0 23px;
+        }
+
+        /* =========================
+           DJANGO FORM
+        ========================= */
+
+        .checkout-form p {
+            margin:
+                0 0 18px;
+        }
+
+        .checkout-form label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #173b78;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        .checkout-form input,
+        .checkout-form textarea,
+        .checkout-form select {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid #d9e1ed;
+
+            border-radius: 11px;
+
+            background: #fbfcfe;
+
+            color: #243858;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+        .checkout-form input:focus,
+        .checkout-form textarea:focus,
+        .checkout-form select:focus {
+            border-color: #123873;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(18,55,115,.08);
+        }
+
+        .checkout-form textarea {
+            min-height: 115px;
+
+            resize: vertical;
+        }
+
+        .checkout-form ul.errorlist {
+            margin: 6px 0;
+
+            padding: 0;
+
+            list-style: none;
+
+            color: #d53535;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        /* =========================
+           PLACE ORDER
+        ========================= */
+
+        .place-order-btn {
+            width: 100%;
+
+            border: none;
+
+            background: #123873;
+
+            color: white;
+
+            padding: 16px;
+
+            border-radius: 13px;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+
+            margin-top: 5px;
+        }
+
+        .place-order-btn:hover {
+            background: #0d2a59;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(18,55,115,.20);
+        }
+
+        .secure-note {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: #f5f8fd;
+
+            color: #71839d;
+
+            font-size: 12px;
+
+            text-align: center;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .order-summary {
+            background: white;
+
+            border:
+                1px solid #e5eaf2;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(16,45,96,.08);
+
+            position: sticky;
+
+            top: 20px;
+        }
+
+        .order-summary h2 {
+            margin: 0 0 22px;
+
+            color: #102d60;
+
+            font-size: 23px;
+
+            font-weight: 900;
+        }
+
+        /* =========================
+           SUMMARY ITEMS
+        ========================= */
+
+        .summary-item {
+            display: grid;
+
+            grid-template-columns:
+                62px
+                1fr;
+
+            gap: 12px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid #edf0f5;
+        }
+
+        .summary-image {
+            width: 62px;
+            height: 70px;
+
+            border-radius: 10px;
+
+            background: #f6f8fc;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        .summary-image img {
+            max-width: 100%;
+            max-height: 65px;
+
+            object-fit: contain;
+        }
+
+        .summary-details {
+            min-width: 0;
+        }
+
+        .summary-name {
+            color: #173b78;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            line-height: 1.4;
+
+            margin-bottom: 5px;
+        }
+
+        .summary-quantity {
+            color: #8998ad;
+
+            font-size: 12px;
+
+            margin-bottom: 4px;
+        }
+
+        .summary-price {
+            color: #102d60;
+
+            font-size: 14px;
+
+            font-weight: 900;
+        }
+
+        /* =========================
+           TOTAL
+        ========================= */
+
+        .grand-total {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding-top: 20px;
+
+            margin-top: 5px;
+        }
+
+        .grand-total span {
+            color: #60738f;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        .grand-total strong {
+            color: #102d60;
+
+            font-size: 25px;
+
+            font-weight: 900;
+        }
+
+        .payment-note {
+            margin-top: 18px;
+
+            padding: 14px;
+
+            background: #fff8e5;
+
+            border:
+                1px solid #f4df9e;
+
+            border-radius: 12px;
+
+            color: #856100;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .back-cart {
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 15px;
+
+            color: #173b78;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+        .back-cart:hover {
+            color: #e2a000;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .checkout-page {
+                padding:
+                    30px 18px 60px;
+            }
+
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .checkout-card,
+            .order-summary {
+                padding: 20px;
+
+                border-radius: 18px;
+            }
+
+            .checkout-header {
+                margin-bottom: 28px;
+            }
+
+            .checkout-header h1 {
+                font-size: 36px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="checkout-page">
+
+    <div class="checkout-container">
+
+
+        <!-- HEADER -->
+
+        <div class="checkout-header">
+
+            <div class="checkout-small-title">
+                🔒 SECURE CHECKOUT
+            </div>
+
+            <h1>
+                Checkout
+            </h1>
+
+            <p>
+                Enter your delivery information and
+                review your order before placing it.
+            </p>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="checkout-layout">
+
+
+            <!-- CUSTOMER INFORMATION -->
+
+            <div class="checkout-card">
+
+                <h2 class="card-title">
+                    👤 Customer Information
+                </h2>
+
+                <p class="card-subtitle">
+                    Please provide your correct delivery
+                    details so we can deliver your order.
+                </p>
+
+
+                <form
+                    method="POST"
+                    class="checkout-form"
+                >
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+
+                    <button
+                        type="submit"
+                        class="place-order-btn"
+                    >
+                        ✓ Place Order
+                    </button>
+
+
+                    <div class="secure-note">
+                        🔒 Your information is used only
+                        for processing and delivering
+                        your order.
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="order-summary">
+
+                <h2>
+                    🛍️ Order Summary
+                </h2>
+
+
+                {% for item in items %}
+
+                    <div class="summary-item">
+
+
+                        <div class="summary-image">
+
+                            {% if item.product.image %}
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                >
+
+                            {% else %}
+
+                                <span>
+                                    📚
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="summary-details">
+
+                            <div class="summary-name">
+                                {{ item.product.name }}
+                            </div>
+
+                            <div class="summary-quantity">
+                                Quantity:
+                                {{ item.quantity }}
+                            </div>
+
+                            <div class="summary-price">
+                                Rs {{ item.total_price }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+                <div class="grand-total">
+
+                    <span>
+                        Grand Total
+                    </span>
+
+                    <strong>
+                        Rs {{ total }}
+                    </strong>
+
+                </div>
+
+
+                <div class="payment-note">
+                    💵 <strong>Payment Method:</strong>
+                    Cash on Delivery
+                </div>
+
+
+                <a
+                    href="{% url 'cart' %}"
+                    class="back-cart"
+                >
+                    ← Back to Cart
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

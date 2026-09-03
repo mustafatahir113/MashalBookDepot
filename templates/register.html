@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Mashal Book Depot</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            background-size: 400% 400%;
+
+            animation: gradientMove 12s ease infinite;
+        }
+
+        @keyframes gradientMove {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+
+        /* MAIN CARD */
+
+        .register-card {
+
+            width: 100%;
+            max-width: 500px;
+
+            padding: 38px 42px;
+
+            background: rgba(255, 255, 255, 0.16);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.25);
+
+            color: white;
+
+            animation: cardShow 0.7s ease;
+        }
+
+        @keyframes cardShow {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* HEADER */
+
+        .logo {
+            text-align: center;
+
+            font-size: 46px;
+
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            text-align: center;
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            font-size: 17px;
+
+            color: rgba(255, 255, 255, 0.85);
+
+            margin-bottom: 25px;
+        }
+
+
+        /* GENERAL ERROR */
+
+        .general-error {
+
+            background: rgba(255, 70, 70, 0.18);
+
+            border: 1px solid rgba(255, 180, 180, 0.5);
+
+            color: #fff;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+
+        /* FORM GROUP */
+
+        .form-group {
+
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+        }
+
+
+        /* INPUTS */
+
+        .form-group input,
+        .form-group select {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 14px;
+
+            border: none;
+
+            outline: none;
+
+            border-radius: 11px;
+
+            background: rgba(255, 255, 255, 0.98);
+
+            color: #222;
+
+            font-size: 15px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+
+            transition: 0.25s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+
+            box-shadow:
+                0 0 0 3px rgba(255, 255, 255, 0.25),
+                0 8px 20px rgba(0, 0, 0, 0.15);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* FIELD ERROR */
+
+        .field-error {
+
+            margin-top: 6px;
+
+            padding: 8px 10px;
+
+            border-radius: 8px;
+
+            background: rgba(255, 60, 60, 0.18);
+
+            color: #fff;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* PASSWORD RULES */
+
+        .password-rules {
+
+            margin-top: 8px;
+
+            margin-bottom: 18px;
+
+            padding: 13px 15px;
+
+            border-radius: 11px;
+
+            background: rgba(0, 0, 0, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .password-rules-title {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+
+            color: white;
+        }
+
+        .password-rules ul {
+
+            padding-left: 18px;
+
+            margin: 0;
+        }
+
+        .password-rules li {
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            color: rgba(255, 255, 255, 0.85);
+
+            margin-bottom: 2px;
+        }
+
+
+        /* REGISTER BUTTON */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 50px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: white;
+
+            color: #5b35d5;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .register-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(0, 0, 0, 0.22);
+        }
+
+        .register-btn:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* LOGIN LINK */
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 14px;
+
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .login-link a {
+
+            color: white;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            margin-left: 4px;
+        }
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 18px 12px;
+
+                align-items: flex-start;
+            }
+
+            .register-card {
+
+                margin-top: 15px;
+
+                padding: 28px 22px;
+
+                border-radius: 20px;
+            }
+
+            .logo {
+
+                font-size: 40px;
+            }
+
+            h1 {
+
+                font-size: 27px;
+            }
+
+            .subtitle {
+
+                font-size: 15px;
+
+                margin-bottom: 22px;
+            }
+
+            .form-group {
+
+                margin-bottom: 15px;
+            }
+
+            .form-group input,
+            .form-group select {
+
+                height: 46px;
+
+                font-size: 15px;
+            }
+
+            .password-rules {
+
+                padding: 11px 13px;
+            }
+
+            .password-rules li {
+
+                font-size: 11.5px;
+            }
+
+            .register-btn {
+
+                height: 48px;
+
+                font-size: 16px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="register-card">
+
+    <!-- HEADER -->
+
+    <div class="logo">
+        📚
+    </div>
+
+    <h1>
+        Mashal Book Depot
+    </h1>
+
+    <p class="subtitle">
+        Create your account
+    </p>
+
+
+    <!-- GENERAL FORM ERRORS -->
+
+    {% if form.non_field_errors %}
+
+        <div class="general-error">
+
+            {% for error in form.non_field_errors %}
+
+                {{ error }}
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <!-- USERNAME -->
+
+        <div class="form-group">
+
+            <label for="{{ form.username.id_for_label }}">
+                Username
+            </label>
+
+            {{ form.username }}
+
+            {% for error in form.username.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="{{ form.email.id_for_label }}">
+                Email Address
+            </label>
+
+            {{ form.email }}
+
+            {% for error in form.email.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+            <label for="{{ form.phone.id_for_label }}">
+                Phone Number
+            </label>
+
+            {{ form.phone }}
+
+            {% for error in form.phone.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- GENDER -->
+
+        <div class="form-group">
+
+            <label for="{{ form.gender.id_for_label }}">
+                Gender
+            </label>
+
+            {{ form.gender }}
+
+            {% for error in form.gender.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="{{ form.password1.id_for_label }}">
+                Password
+            </label>
+
+            {{ form.password1 }}
+
+            {% for error in form.password1.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- PASSWORD RULES -->
+
+        <div class="password-rules">
+
+            <div class="password-rules-title">
+                🔐 Password requirements
+            </div>
+
+            <ul>
+
+                <li>At least 8 characters</li>
+
+                <li>Cannot be too similar to your personal information</li>
+
+                <li>Cannot be a commonly used password</li>
+
+                <li>Cannot be entirely numeric</li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="{{ form.password2.id_for_label }}">
+                Confirm Password
+            </label>
+
+            {{ form.password2 }}
+
+            {% for error in form.password2.errors %}
+
+                <div class="field-error">
+                    {{ error }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="submit"
+            class="register-btn"
+        >
+            Create Account
+        </button>
+
+    </form>
+
+
+    <!-- LOGIN -->
+
+    <div class="login-link">
+
+        Already have an account?
+
+        <a href="{% url 'login' %}">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Email Verification Sent</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            margin:0;
+        }
+
+        .container{
+            background:white;
+            width:700px;
+            padding:40px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            color:green;
+            margin-bottom:15px;
+        }
+
+        .note{
+            background:#fff3cd;
+            color:#856404;
+            padding:15px;
+            border-radius:10px;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+        ol li{
+            margin-bottom:10px;
+        }
+
+        .success{
+            font-size:18px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        ✅ Verification Email Sent
+    </h1>
+
+    <p class="success">
+        Your account has been created successfully.
+    </p>
+    <div style="
+background:#e8f4ff;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+margin-bottom:20px;
+">
+
+    <strong>
+        We have sent a verification email to:
+    </strong>
+
+    <br><br>
+
+    <span style="
+    color:#0d6efd;
+    font-size:20px;
+    font-weight:bold;
+    ">
+        {{ email }}
+    </span>
+
+</div>
+
+    <p>
+        Please check your email and click the verification link to activate your account.
+    </p>
+
+    <div class="note">
+
+        <strong>⚠ Important Note:</strong>
+
+        If you cannot find the email in your Inbox,
+        please check your <b>Spam Folder</b>.
+
+        Verification emails sometimes appear in Spam.
+
+    </div>
+
+    <h3>
+        How To Open Spam Folder In Gmail
+    </h3>
+
+    <ol>
+
+        <li>
+            Open your Gmail account.
+        </li>
+
+        <li>
+            Look at the left side menu.
+        </li>
+
+        <li>
+            Click <b>More</b>.
+        </li>
+
+        <li>
+            Click <b>Spam</b>.
+        </li>
+
+        <li>
+            Find the email from
+            <b>Mashal Book Depot</b>.
+        </li>
+
+        <li>
+            Open the email and click the verification link.
+        </li>
+
+        <li>
+            Click <b>Not Spam</b> so future emails arrive in Inbox.
+        </li>
+
+    </ol>
+    <div style="margin-top:30px;">
+
+    <a href="https://mail.google.com"
+       target="_blank"
+       style="
+       background:#0d6efd;
+       color:white;
+       text-decoration:none;
+       padding:12px 25px;
+       border-radius:8px;
+       margin-right:10px;
+       display:inline-block;">
+        📧 Open Gmail
+    </a>
+
+    <a href="{% url 'login' %}"
+       style="
+       background:#198754;
+       color:white;
+       text-decoration:none;
+       padding:12px 25px;
+       border-radius:8px;
+       display:inline-block;">
+        🔐 Go To Login
+    </a>
+
+</div>
+
+</div>
+
+</body>
+</html>

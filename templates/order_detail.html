@@ -1,0 +1,768 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Order #{{ order.id }} | Mashal Book Depot
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #173b78;
+        }
+
+
+        .order-detail-page {
+
+            min-height: 100vh;
+
+            padding: 50px 7% 80px;
+
+        }
+
+
+        .order-detail-container {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+        }
+
+
+        /* HEADER */
+
+        .detail-header {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .detail-header small {
+
+            display: block;
+
+            color: #e9a400;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .detail-header h1 {
+
+            margin: 0;
+
+            color: #102d60;
+
+            font-size: 42px;
+
+            font-weight: 900;
+
+        }
+
+
+        .detail-header p {
+
+            margin-top: 10px;
+
+            color: #71839d;
+
+            font-size: 16px;
+
+        }
+
+
+        /* MAIN CARD */
+
+        .detail-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e6ebf3;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 12px 35px rgba(
+                    16,
+                    45,
+                    96,
+                    0.08
+                );
+
+        }
+
+
+        /* ORDER TOP */
+
+        .detail-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid #edf0f5;
+
+        }
+
+
+        .detail-order-number span {
+
+            display: block;
+
+            color: #8998ad;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .detail-order-number strong {
+
+            color: #102d60;
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+        }
+
+
+        .detail-status {
+
+            padding: 10px 18px;
+
+            border-radius: 30px;
+
+            background: #eef4ff;
+
+            color: #173b78;
+
+            border: 1px solid #d9e5fb;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* CUSTOMER INFORMATION */
+
+        .customer-info {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin: 25px 0;
+
+        }
+
+
+        .info-box {
+
+            background: #f8faff;
+
+            border: 1px solid #edf1f7;
+
+            border-radius: 14px;
+
+            padding: 16px;
+
+        }
+
+
+        .info-box span {
+
+            display: block;
+
+            color: #8998ad;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .info-box strong {
+
+            color: #173b78;
+
+            font-size: 15px;
+
+        }
+
+
+        /* PRODUCTS */
+
+        .products-title {
+
+            color: #102d60;
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            margin: 30px 0 15px;
+
+        }
+
+
+        .product-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #edf0f5;
+
+        }
+
+
+        .product-name {
+
+            color: #173b78;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+        }
+
+
+        .product-quantity {
+
+            color: #71839d;
+
+            font-size: 14px;
+
+            margin-top: 5px;
+
+        }
+
+
+        .product-price {
+
+            color: #102d60;
+
+            font-size: 17px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* TOTAL */
+
+        .detail-total {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background: #f8faff;
+
+            border: 1px solid #edf1f7;
+
+        }
+
+
+        .detail-total span {
+
+            color: #71839d;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+        }
+
+
+        .detail-total strong {
+
+            color: #102d60;
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+        }
+
+
+        /* BUTTONS */
+
+        .detail-buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .detail-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 14px 22px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition: all .25s ease;
+
+        }
+
+
+        .back-button {
+
+            background: #eef2f8;
+
+            color: #173b78;
+
+            border: 1px solid #dfe5ee;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #e3e9f2;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .invoice-button {
+
+            background: #123873;
+
+            color: #ffffff;
+
+        }
+
+
+        .invoice-button:hover {
+
+            background: #0d2a59;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .order-detail-page {
+
+                padding:
+                    30px 18px 60px;
+
+            }
+
+
+            .detail-header h1 {
+
+                font-size: 32px;
+
+            }
+
+
+            .detail-card {
+
+                padding: 20px;
+
+                border-radius: 18px;
+
+            }
+
+
+            .detail-top {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .customer-info {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .product-item {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 8px;
+
+            }
+
+
+            .detail-total {
+
+                gap: 10px;
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .detail-buttons {
+
+                flex-direction: column;
+
+            }
+
+
+            .detail-button {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="order-detail-page">
+
+    <div class="order-detail-container">
+
+
+        <!-- HEADER -->
+
+        <div class="detail-header">
+
+            <small>📦 ORDER DETAILS</small>
+
+            <h1>
+                Order #{{ order.id }}
+            </h1>
+
+            <p>
+                Complete information about your order
+            </p>
+
+        </div>
+
+
+        <!-- MAIN CARD -->
+
+        <div class="detail-card">
+
+
+            <!-- ORDER TOP -->
+
+            <div class="detail-top">
+
+                <div class="detail-order-number">
+
+                    <span>
+                        Order Number
+                    </span>
+
+                    <strong>
+                        #{{ order.id }}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-status">
+
+                    {{ order.status }}
+
+                </div>
+
+            </div>
+
+
+            <!-- CUSTOMER INFORMATION -->
+
+            <div class="customer-info">
+
+
+                <div class="info-box">
+
+                    <span>
+                        Customer
+                    </span>
+
+                    <strong>
+                        {{ order.full_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Phone
+                    </span>
+
+                    <strong>
+                        {{ order.phone }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Payment
+                    </span>
+
+                    <strong>
+                        Cash on Delivery
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Order Date
+                    </span>
+
+                    <strong>
+                        {{ order.created_at|date:"d M Y" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Order Time
+                    </span>
+
+                    <strong>
+                        {{ order.created_at|date:"h:i A" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <span>
+                        Delivery Address
+                    </span>
+
+                    <strong>
+                        {{ order.address }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+
+            <h2 class="products-title">
+                Ordered Products
+            </h2>
+
+
+            {% for item in order.items.all %}
+
+                <div class="product-item">
+
+
+                    <div>
+
+                        <div class="product-name">
+                            {{ item.product.name }}
+                        </div>
+
+                        <div class="product-quantity">
+
+                            Quantity:
+                            {{ item.quantity }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-price">
+
+                        Rs. {{ item.price }}
+
+                    </div>
+
+
+                </div>
+
+            {% empty %}
+
+                <p>
+                    No products found in this order.
+                </p>
+
+            {% endfor %}
+
+
+            <!-- TOTAL -->
+
+            <div class="detail-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    Rs. {{ order.total_amount }}
+                </strong>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="detail-buttons">
+
+
+                <a
+                    href="{% url 'my_orders' %}"
+                    class="detail-button back-button"
+                >
+
+                    ← Back to My Orders
+
+                </a>
+
+
+                <a
+                    href="{% url 'download_invoice' order.id %}"
+                    class="detail-button invoice-button"
+                >
+
+                    📄 Download Invoice PDF
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
