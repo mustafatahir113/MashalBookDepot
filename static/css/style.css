@@ -1804,7 +1804,7 @@ button:disabled {
     }
 
     .header-links .login-btn {
-        display: none;
+        display: block;
     }
 
     .search-box {
@@ -1819,16 +1819,16 @@ button:disabled {
 
     .search-box input {
         padding:
-            11px 15px;
+            12px 16px;
 
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .search-box button {
         padding:
-            11px 16px;
+            12px 18px;
 
-        font-size: 13px;
+        font-size: 1px;
     }
 
 
@@ -1845,8 +1845,8 @@ button:disabled {
         background:
             linear-gradient(
                 180deg,
-                rgba(7, 24, 55, 0.55),
-                rgba(7, 24, 55, 0.88)
+                  rgba(7,24,55,.72),
+                  rgba(7,24,55,.94)
             );
     }
 
