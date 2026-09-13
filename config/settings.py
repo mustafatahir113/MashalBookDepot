@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "192.168.100.134",
     "172.17.242.116",
+    "mustafa113.pythonanywhere.com",
 ]
 
 if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
@@ -152,6 +153,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
