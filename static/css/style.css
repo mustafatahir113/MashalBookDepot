@@ -1735,9 +1735,9 @@ button:disabled {
 
 }
 
-
 /* =========================================================
-   MOBILE
+   MOBILE HEADER ONLY
+   Desktop remains completely unchanged
 ========================================================= */
 
 @media (max-width: 768px) {
@@ -1749,282 +1749,417 @@ button:disabled {
     .header {
         position: sticky;
         top: 0;
+        z-index: 1000;
 
         width: 100%;
 
-        min-height: 62px;
+        min-height: 0;
 
-        display: flex;
+        display: grid;
 
-        flex-wrap: nowrap;
+        grid-template-columns: 42px 1fr auto;
 
-        align-items: center;
-
-        gap: 10px;
-
-        padding:
-            10px 14px;
-
-        overflow: hidden;
-    }
-
-    .menu-btn {
-        flex: 0 0 auto;
-
-        font-size: 25px;
-
-        width: 28px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .logo {
-        flex: 1 1 auto;
-
-        min-width: 0;
-
-        font-size: 18px;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-
-        white-space: nowrap;
-    }
-
-    /*
-       Mobile header links ko compact rakha gaya hai.
-       Desktop wali large spacing remove.
-    */
-
-    .header-links {
-        flex: 0 0 auto;
-
-        margin-left: auto;
-
-        display: flex;
+        grid-template-rows: auto auto;
 
         align-items: center;
 
-        gap: 6px;
+        column-gap: 8px;
+        row-gap: 10px;
 
-        min-width: 0;
-    }
+        padding: 12px 14px 13px;
 
-    .header-item a {
-        display: inline-flex;
+        background: rgba(255, 255, 255, 0.98);
 
-        align-items: center;
-        justify-content: center;
+        box-shadow:
+            0 4px 18px rgba(16, 38, 77, 0.08);
 
-        font-size: 0;
-
-        min-width: 30px;
-        min-height: 34px;
-    }
-
-    /*
-       Heart/cart icons agar HTML mein text/emoji hain
-       to unko compact rakhein.
-    */
-
-    .header-item {
-        display: flex;
-
-        align-items: center;
-    }
-
-    .header-item a {
-        padding: 3px;
-    }
-
-    .login-btn {
-        font-size: 0;
-
-        display: flex;
-        align-items: center;
-    }
-
-    /*
-       Welcome / My Orders ko mobile par text ki jagah
-       compact rakha gaya hai taake header tootay nahi.
-    */
-
-    .login-btn a {
-        font-size: 0;
-    }
-
-    .login-btn button {
-        padding:
-            8px 11px;
-
-        border-radius: 9px;
-
-        font-size: 11px;
-
-        white-space: nowrap;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
 
 
     /* -----------------------------------------------------
-       SEARCH
+       MENU
     ----------------------------------------------------- */
 
-    /*
-       Search desktop par rahegi.
-       Mobile header ko clean rakhne ke liye search hide.
-    */
+    .menu-btn {
+        grid-column: 1;
+        grid-row: 1;
 
-    .search-box {
+        display: flex;
+
+        align-items: center;
+        justify-content: flex-start;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 27px;
+
+        color: #102f66;
+
+        line-height: 1;
+
+        cursor: pointer;
+    }
+
+
+    /* -----------------------------------------------------
+       LOGO
+    ----------------------------------------------------- */
+
+    .logo {
+        grid-column: 2;
+        grid-row: 1;
+
+        width: 100%;
+
+        text-align: center;
+
+        font-size: 18px;
+
+        font-weight: 800;
+
+        color: #102f66;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    /* -----------------------------------------------------
+       HEADER LINKS
+       Profile area remains on right
+    ----------------------------------------------------- */
+
+    .header-links {
+        grid-column: 3;
+        grid-row: 1;
+
+        margin-left: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 5px;
+    }
+
+
+    /* Hide normal header items on mobile.
+       Wishlist + Cart will be moved to floating buttons. */
+
+    .header-links .header-item {
         display: none;
     }
 
 
     /* -----------------------------------------------------
-       HERO
+       LOGIN / PROFILE
     ----------------------------------------------------- */
 
-    .hero {
-        width: 100%;
-
-        min-height:
-            calc(100svh - 62px);
-
+    .header-links .login-btn {
         display: flex;
 
         align-items: center;
+        justify-content: center;
+
+        margin: 0;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 0;
+
+        border-radius: 50%;
+
+        background: #f5f7fb;
+
+        border: 1px solid #dce3ed;
 
         overflow: hidden;
     }
 
-    .hero-background {
-        position: absolute;
 
-        inset: 0;
-    }
+    /* Login link */
 
-    .hero-background img {
+    .header-links .login-btn a {
         width: 100%;
         height: 100%;
 
-        object-fit: cover;
+        display: flex;
 
-        /*
-           Mobile par image ko left side ki taraf
-           thora shift kiya gaya hai.
-        */
+        align-items: center;
+        justify-content: center;
 
-        object-position:
-            58% center;
+        color: transparent;
+
+        font-size: 0;
+
+        position: relative;
+    }
+
+
+    /* Profile icon */
+
+    .header-links .login-btn a::before {
+        content: "👤";
+
+        color: #102f66;
+
+        font-size: 22px;
+
+        line-height: 1;
+    }
+
+
+    /* -----------------------------------------------------
+       LOGOUT BUTTON
+    ----------------------------------------------------- */
+
+    .header-links .login-btn form {
+        width: 100%;
+        height: 100%;
+    }
+
+    .header-links .login-btn button {
+        width: 100%;
+        height: 100%;
+
+        padding: 0;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: #102f66;
+
+        color: transparent;
+
+        font-size: 0;
+
+        position: relative;
+    }
+
+    .header-links .login-btn button::before {
+        content: "👤";
+
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        color: white;
+
+        font-size: 21px;
+    }
+
+
+    /* -----------------------------------------------------
+       SEARCH
+       Full second row
+    ----------------------------------------------------- */
+
+    .search-box {
+        grid-column: 1 / -1;
+        grid-row: 2;
+
+        order: unset;
+
+        width: 100%;
+
+        display: flex;
+
+        justify-content: stretch;
+
+        margin: 0;
+    }
+
+    .search-box form {
+        width: 100%;
+
+        max-width: none;
+
+        display: flex;
+
+        gap: 7px;
+    }
+
+    .search-box input {
+        flex: 1;
+
+        width: auto;
+
+        min-width: 0;
+
+        height: 44px;
+
+        padding:
+            0 15px;
+
+        border:
+            1px solid #dfe5ef;
+
+        border-radius: 12px;
+
+        background: #f8f9fc;
+
+        font-size: 14px;
+    }
+
+    .search-box button {
+        flex-shrink: 0;
+
+        width: 76px;
+
+        height: 44px;
+
+        padding: 0;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: #102f66;
+
+        color: white;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        opacity: 1;
+
+        visibility: visible;
+    }
+
+
+    /* -----------------------------------------------------
+       FLOATING WISHLIST + CART
+       Right side
+    ----------------------------------------------------- */
+
+    .mobile-floating-actions {
+        position: fixed;
+
+        right: 10px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        z-index: 1500;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 9px;
+    }
+
+    .mobile-floating-actions a,
+    .mobile-floating-actions button {
+        width: 46px;
+        height: 46px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border:
+            1px solid #dce3ed;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        color: #102f66;
+
+        font-size: 21px;
+
+        box-shadow:
+            0 5px 18px rgba(16, 38, 77, 0.14);
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .mobile-floating-actions a:active,
+    .mobile-floating-actions button:active {
+        transform: scale(0.92);
+    }
+
+    .mobile-floating-actions .floating-wishlist {
+        color: #102f66;
+    }
+
+    .mobile-floating-actions .floating-cart {
+        color: #102f66;
+    }
+
+
+    /* -----------------------------------------------------
+       HERO
+       Mobile layout only
+    ----------------------------------------------------- */
+
+    .hero {
+        min-height:
+            calc(100svh - 115px);
     }
 
     .hero-overlay {
         background:
             linear-gradient(
                 180deg,
-                rgba(7, 24, 55, 0.60) 0%,
-                rgba(7, 24, 55, 0.78) 42%,
-                rgba(7, 24, 55, 0.96) 100%
+                rgba(7, 24, 55, 0.72),
+                rgba(7, 24, 55, 0.94)
             );
     }
 
     .hero-content {
-        width: 100%;
-
-        max-width: none;
-
-        margin: 0;
-
         padding:
-            48px 22px 55px;
+            45px 22px;
     }
 
     .hero-left {
         width: 100%;
-
-        max-width: 100%;
     }
 
     .hero-badge {
-        max-width: 100%;
-
-        margin-bottom: 20px;
+        font-size: 13px;
 
         padding:
             8px 13px;
-
-        font-size: 12px;
-
-        line-height: 1.3;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
     }
 
     .hero-left h1 {
-        width: 100%;
-
-        margin-bottom: 18px;
-
         font-size:
-            clamp(40px, 12vw, 56px);
+            clamp(38px, 11vw, 55px);
 
-        line-height: 1.02;
-
-        letter-spacing: -1.5px;
+        letter-spacing:
+            -1px;
     }
 
     .hero-left p {
-        width: 100%;
-
-        margin-bottom: 28px;
-
         font-size: 17px;
-
-        line-height: 1.45;
-    }
-
-    .hero-left button {
-        min-height: 52px;
-
-        padding:
-            14px 28px;
-
-        font-size: 16px;
-    }
-
-
-    /* -----------------------------------------------------
-       HERO CIRCLES
-    ----------------------------------------------------- */
-
-    .hero .c1 {
-        width: 190px;
-        height: 190px;
-
-        left: -75px;
-        top: 8%;
-    }
-
-    .hero .c2 {
-        width: 130px;
-        height: 130px;
-
-        right: -50px;
-        top: 60%;
-    }
-
-    .hero .c3 {
-        width: 90px;
-        height: 90px;
-
-        right: 18%;
-        bottom: 8%;
     }
 
 
@@ -2037,17 +2172,10 @@ button:disabled {
             38px 15px;
     }
 
-    .stats-container {
-        gap: 12px;
-    }
-
     .stat-card {
         width: 100%;
 
         max-width: 300px;
-
-        padding:
-            20px;
     }
 
 
@@ -2061,30 +2189,7 @@ button:disabled {
     }
 
     .categories h2 {
-        padding:
-            0 15px;
-
         font-size: 29px;
-    }
-
-    .category-container {
-        padding:
-            10px 18px 20px;
-
-        gap: 12px;
-    }
-
-    .category-link,
-    .category-card {
-        width: 145px;
-    }
-
-    .category-link {
-        flex-basis: 145px;
-    }
-
-    .category-card {
-        height: 100px;
     }
 
 
@@ -2093,10 +2198,8 @@ button:disabled {
     ----------------------------------------------------- */
 
     .products {
-        width: 100%;
-
         padding:
-            50px 14px 60px;
+            50px 15px 60px;
     }
 
     .products-heading {
@@ -2104,9 +2207,9 @@ button:disabled {
     }
 
     .products-small-title {
-        gap: 8px;
-
         font-size: 12px;
+
+        gap: 9px;
     }
 
     .products-small-title span {
@@ -2114,151 +2217,71 @@ button:disabled {
     }
 
     .products-heading h2 {
-        font-size:
-            clamp(32px, 10vw, 42px);
-
-        letter-spacing: -1px;
+        font-size: 40px;
     }
 
     .products-heading > p {
         padding:
-            0 8px;
+            0 10px;
 
-        font-size: 15px;
+        font-size: 16px;
     }
 
-
-    /* -----------------------------------------------------
-       PRODUCT GRID - TWO COLUMNS ON MOBILE
-    ----------------------------------------------------- */
-
     .product-container {
-        width: 100%;
-
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
-        gap: 12px;
+        gap: 14px;
     }
 
     .product-card {
-        width: 100%;
-
-        min-width: 0;
-
         padding:
-            12px;
+            14px;
 
-        border-radius: 17px;
+        border-radius: 18px;
     }
 
     .wishlist-heart {
-        top: 10px;
-        right: 10px;
+        top: 13px;
+        right: 13px;
 
-        width: 38px;
-        height: 38px;
+        width: 42px;
+        height: 42px;
 
-        font-size: 22px;
+        font-size: 25px;
     }
 
-
-    /* -----------------------------------------------------
-       PRODUCT IMAGE
-    ----------------------------------------------------- */
-
     .product-image-box {
-        width: 100%;
+        height: 220px;
 
-        height: 200px;
-
-        margin:
-            3px 0 7px;
-
-        border-radius: 14px;
+        margin-top: 4px;
     }
 
     .product-image {
-        width: 100%;
-        height: 100%;
-
-        max-width: 100%;
-
-        padding: 7px;
-    }
-
-    .no-product-image {
-        width: 120px;
-        height: 165px;
-
-        font-size: 50px;
-    }
-
-
-    /* -----------------------------------------------------
-       PRODUCT INFO
-    ----------------------------------------------------- */
-
-    .product-info {
-        width: 100%;
-
-        min-width: 0;
+        padding: 8px;
     }
 
     .product-info h3 {
-        width: 100%;
+        min-height: 42px;
 
-        min-height: 40px;
-
-        margin:
-            4px 0 7px;
-
-        overflow: hidden;
+        text-align: left;
     }
 
     .product-info h3 a {
-        display: -webkit-box;
-
-        overflow: hidden;
-
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-
-        font-size: 16px;
-
-        line-height: 1.25;
+        font-size: 17px;
     }
 
     .product-category {
-        max-width: 100%;
-
         padding:
             5px 8px;
 
-        margin-bottom: 7px;
-
-        font-size: 9px;
-
-        overflow: hidden;
-
-        white-space: nowrap;
-
-        text-overflow: ellipsis;
-    }
-
-    .product-category span {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .product-description {
-        width: 100%;
-
-        margin:
-            2px 0 6px;
-
         font-size: 10px;
 
-        line-height: 1.4;
+        margin-bottom: 7px;
     }
 
     .see-more {
@@ -2270,77 +2293,41 @@ button:disabled {
     }
 
     .product-rating {
-        gap: 3px;
-
-        margin-top: 5px;
-
-        font-size: 10px;
+        font-size: 11px;
 
         flex-wrap: wrap;
     }
 
     .product-rating .star {
-        font-size: 15px;
+        font-size: 17px;
     }
-
-    .stock-message {
-        margin-top: 5px;
-
-        font-size: 10px;
-    }
-
-
-    /* -----------------------------------------------------
-       PRODUCT ACTIONS
-    ----------------------------------------------------- */
 
     .product-actions {
-        width: 100%;
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1fr;
+        gap: 7px;
 
-        gap: 6px;
-
-        margin-top: 11px;
+        margin-top: 14px;
     }
 
     .ajax-cart-btn,
     .wishlist-bottom,
     .out-of-stock-button {
-        width: 100%;
+        min-height: 42px;
 
-        min-height: 40px;
+        font-size: 12px;
 
-        padding:
-            8px 5px;
+        border-radius: 10px;
+    }
 
-        border-radius: 9px;
+    .cart-success-icon {
+        width: 18px;
+        height: 18px;
 
         font-size: 11px;
     }
 
-    .cart-icon {
-        margin-right: 3px;
-    }
-
-    .cart-success-icon {
-        width: 17px;
-        height: 17px;
-
-        font-size: 10px;
-    }
-
-
-    /* -----------------------------------------------------
-       VIEW ALL
-    ----------------------------------------------------- */
-
     .view-all-wrapper {
-        width: 100%;
-
-        margin-top: 28px;
-
         gap: 10px;
     }
 
@@ -2350,32 +2337,9 @@ button:disabled {
 
     .view-all-button {
         padding:
-            13px 22px;
+            13px 23px;
 
         font-size: 14px;
-
-        gap: 12px;
-    }
-
-    .view-all-button span {
-        font-size: 21px;
-    }
-
-
-    /* -----------------------------------------------------
-       SIDEBAR
-    ----------------------------------------------------- */
-
-    .sidebar {
-        width:
-            min(310px, 86vw);
-    }
-
-    .sidebar a {
-        padding:
-            16px 22px;
-
-        font-size: 16px;
     }
 
 
@@ -2391,14 +2355,32 @@ button:disabled {
         touch-action: manipulation;
     }
 
-    .sidebar,
-    .sidebar a,
-    .sidebar button {
+    button,
+    a {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .overlay {
+        pointer-events: none;
+    }
+
+    .overlay.active {
         pointer-events: auto;
     }
 
-}
+    .sidebar {
+        pointer-events: auto;
+    }
 
+    .sidebar a,
+    .sidebar button {
+        position: relative;
+
+        z-index: 2100;
+
+        pointer-events: auto;
+    }
+}
 
 /* =========================================================
    SMALL MOBILE
